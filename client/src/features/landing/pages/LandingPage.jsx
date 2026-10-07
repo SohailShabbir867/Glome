@@ -1,38 +1,30 @@
 import HeroSection from '../components/HeroSection';
-import MissionQuote from '../components/MissionQuote';
-import CategoriesSection from '../components/CategoriesSection';
-import ComparisonSection from '../components/ComparisonSection';
-import StatsBar from '../components/StatsBar';
-import PromoBanner from '../components/PromoBanner';
-import FeaturedProducts from '../components/FeaturedProducts';
-import NewsletterSection from '../components/NewsletterSection';
+import CircleCategories from '../components/CircleCategories';
+import BestSellersSection from '../components/BestSellersSection';
+import PromoBannersSection from '../components/PromoBannersSection';
+import TrendingNowSection from '../components/TrendingNowSection';
+import BrandLogosBar from '../components/BrandLogosBar';
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-[#faf7f2]">
-      {/* Hero with Photo Montage Showcase & Trust Feature Bar */}
+    <main className="min-h-screen bg-white">
+      {/* 1. Hero with Model Showcase & 3 Side Cards */}
       <HeroSection />
 
-      {/* Editorial Mission Quote Banner */}
-      <MissionQuote />
+      {/* 2. Shop by Category (8 Circle Categories) */}
+      <CircleCategories />
 
-      {/* The Problems We Solve vs The Glome Standard */}
-      <ComparisonSection />
+      {/* 3. Featured Products - Best Sellers with Color Swatches */}
+      <BestSellersSection />
 
-      {/* Deep Forest Green Metrics & Stats Strip */}
-      <StatsBar />
+      {/* 4. Promotional Triple Banners */}
+      <PromoBannersSection />
 
-      {/* Top Handpicked Categories */}
-      <CategoriesSection />
+      {/* 5. Trending Now - Popular Right Now */}
+      <TrendingNowSection />
 
-      {/* Seasonal Promotional Savings Banner */}
-      <PromoBanner />
-
-      {/* Featured Artisan Products */}
-      <FeaturedProducts />
-
-      {/* VIP Circle Newsletter Subscription */}
-      <NewsletterSection />
+      {/* 6. Partner Brand Trust Bar */}
+      <BrandLogosBar />
     </main>
   );
 }
