@@ -1,23 +1,42 @@
 @import 'tailwindcss';
 
-/* Glome design tokens. Change these once and the whole app updates.
-   Use them in JSX like: bg-brand, text-ink, border-line */
+/* Glome x RoomBridge Design System
+   Rich deep forest green + warm linen cream + warm terracotta/caramel gold + editorial serif */
 @theme {
-  --color-brand: #1f3a5f;
-  --color-brand-dark: #14263f;
-  --color-accent: #e8643c;
-  --color-ink: #111827;
-  --color-muted: #6b7280;
-  --color-line: #e5e7eb;
-  --color-surface: #f8f7f4;
+  --color-forest: #0b3b2c;
+  --color-forest-dark: #06261b;
+  --color-forest-deep: #041a12;
+  --color-forest-light: #14543f;
+  --color-forest-subtle: #0f4634;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-cream: #faf7f2;
+  --color-cream-surface: #f4efe9;
+  --color-cream-card: #fdfcf9;
+
+  --color-caramel: #cf7a3a;
+  --color-caramel-hover: #b8672e;
+  --color-caramel-light: #fdf5ee;
+
+  --color-gold: #d4a373;
+  --color-gold-light: #e8c7a6;
+
+  --color-ink: #14211d;
+  --color-ink-muted: #596b63;
+  --color-ink-light: #8a9c94;
+  --color-line: #e8e4db;
+  --color-line-dark: #194a3a;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 body {
-  @apply bg-surface text-ink antialiased;
+  background-color: #faf7f2;
+  color: #14211d;
+  -webkit-font-smoothing: antialiased;
 }
