@@ -6,18 +6,19 @@ const PROMO_SLIDES = [
   {
     badge: 'Limited Time Offer',
     discount: 'Up to 50% OFF',
-    subtitle: 'On Selected Items',
+    subtitle: 'On Selected Artisan Footwear',
     description:
-      'Elevate your wardrobe with premium season clearance staples before stock runs out.',
+      'Engineered with premium memory-foam soles and breathable handwoven mesh. Step into comfort with season-end savings.',
     link: '/explore?sale=true',
     image: '/images/promo-banner-items.jpg',
   },
   {
-    badge: 'Flash Deal of the Week',
+    badge: 'Curated Drop',
     discount: 'Flat 40% OFF',
-    subtitle: 'On New Sneakers & Footwear',
-    description: 'Engineered for performance and all-day comfort. Limited quantities available.',
-    link: '/explore?category=shoes',
+    subtitle: 'On Organic Cotton Hoodies & Outerwear',
+    description:
+      'Heavyweight 450 GSM French Terry cotton hoodies. Pre-shrunk for the perfect permanent fit.',
+    link: '/explore?category=men',
     image: '/images/promo-banner-items.jpg',
   },
 ];
@@ -36,38 +37,38 @@ export default function PromoBanner() {
   const slide = PROMO_SLIDES[currentSlide];
 
   return (
-    <section className="py-8 bg-white">
+    <section className="py-10 bg-[#faf7f2]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#041c20] via-[#072d31] to-[#0b4042] text-white shadow-2xl">
+        <div className="relative overflow-hidden rounded-3xl bg-[#0b3b2c] text-white shadow-2xl border border-[#144e3b]">
           {/* Subtle background glow */}
           <div
-            className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl"
+            className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#cf7a3a]/15 blur-3xl"
             aria-hidden="true"
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 lg:p-12">
             {/* Left Content */}
             <div className="lg:col-span-6 z-10 space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-300">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#d4a373]">
                 <Tag className="h-3.5 w-3.5" />
                 <span>{slide.badge}</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
                 {slide.discount} <br />
-                <span className="text-emerald-300 font-semibold text-2xl sm:text-3xl lg:text-4xl">
+                <span className="italic font-normal text-[#d4a373] text-2xl sm:text-3xl lg:text-4xl">
                   {slide.subtitle}
                 </span>
               </h2>
 
-              <p className="max-w-md text-sm sm:text-base text-gray-300">{slide.description}</p>
+              <p className="max-w-md text-sm sm:text-base text-[#dce7e2]">{slide.description}</p>
 
               <div className="pt-2 flex items-center gap-4">
                 <Link
                   to={slide.link}
-                  className="inline-flex items-center gap-2 rounded-full bg-white hover:bg-gray-100 text-[#072d31] px-7 py-3 text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-98"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#cf7a3a] hover:bg-[#b8672e] text-white px-7 py-3 text-sm font-semibold shadow-lg shadow-black/20 transition-all duration-200 active:scale-98"
                 >
-                  <span>Shop Now</span>
+                  <span>Claim Savings</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
