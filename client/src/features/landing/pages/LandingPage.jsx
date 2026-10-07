@@ -1,12 +1,26 @@
+import HeroSection from '../components/HeroSection';
+import CategoriesSection from '../components/CategoriesSection';
+import PromoBanner from '../components/PromoBanner';
+import FeaturedProducts from '../components/FeaturedProducts';
+import NewsletterSection from '../components/NewsletterSection';
+
 export default function LandingPage() {
   return (
-    <main className="mx-auto max-w-6xl px-6 py-24">
-      <p className="text-sm font-semibold uppercase tracking-widest text-accent">New season</p>
-      <h1 className="mt-4 text-5xl font-bold text-brand">Glome</h1>
-      <p className="mt-4 max-w-xl text-lg text-muted">
-        Shoes, clothing and everyday style in one modern mall. The 3D landing page will be built
-        here.
-      </p>
+    <main className="min-h-screen bg-white">
+      {/* Hero with Showcase & Trust Features */}
+      <HeroSection />
+
+      {/* Top Categories */}
+      <CategoriesSection />
+
+      {/* Promotional Discount Banner */}
+      <PromoBanner />
+
+      {/* Featured Products */}
+      <FeaturedProducts />
+
+      {/* VIP Newsletter Callout */}
+      <NewsletterSection />
     </main>
   );
 }
