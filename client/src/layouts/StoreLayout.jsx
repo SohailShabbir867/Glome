@@ -5,7 +5,7 @@ import Footer from '@/components/common/Footer';
 // Customer storefront layout with sticky navigation and footer
 export default function StoreLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-[#faf7f2]">
       <Navbar />
       <div className="flex-1">
         <Outlet />
