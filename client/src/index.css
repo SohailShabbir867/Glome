@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+/* Glome design tokens. Change these once and the whole app updates.
+   Use them in JSX like: bg-brand, text-ink, border-line */
+@theme {
+  --color-brand: #1f3a5f;
+  --color-brand-dark: #14263f;
+  --color-accent: #e8643c;
+  --color-ink: #111827;
+  --color-muted: #6b7280;
+  --color-line: #e5e7eb;
+  --color-surface: #f8f7f4;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-surface text-ink antialiased;
+}
