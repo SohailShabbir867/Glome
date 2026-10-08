@@ -18,10 +18,10 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="font-serif text-2xl font-bold tracking-tight text-white leading-none">
-                  RoomBridge
+                  GLOME
                 </span>
                 <span className="text-[10px] uppercase tracking-widest text-[#dce7e2] font-medium mt-0.5">
-                  Style Your Life
+                  Online Mall
                 </span>
               </div>
             </Link>
@@ -205,7 +205,7 @@ export default function Footer() {
 
         {/* Bottom copyright & legal */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#dce7e2]/70">
-          <p>&copy; {new Date().getFullYear()} RoomBridge. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Glome. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="hover:text-white transition-colors">
               Privacy Policy

@@ -83,7 +83,7 @@ export default function ComparisonSection() {
             })}
           </div>
 
-          {/* Right Column: The Glome Way (Dark Forest Card matching RoomBridge) */}
+          {/* Right Column: The Glome Way (Dark Forest Card) */}
           <div className="lg:col-span-5 flex">
             <div className="w-full rounded-3xl bg-[#0b3b2c] text-white p-7 sm:p-9 shadow-2xl flex flex-col justify-between border border-[#144e3b]">
               <div>
