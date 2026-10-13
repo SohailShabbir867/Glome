@@ -20,8 +20,6 @@ import { selectCartCount, selectWishlist } from '@/features/cart/cartSlice';
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Shop', href: '/shop' },
-  { label: 'Men', href: '/men' },
-  { label: 'Women', href: '/women' },
   { label: 'Shoes', href: '/shoes' },
   { label: 'Accessories', href: '/accessories' },
   { label: 'About', href: '/about' },
