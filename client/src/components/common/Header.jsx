@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Search,
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { selectCurrentUser, clearCredentials } from '@/features/auth/authSlice';
+import { selectCartCount, selectWishlist } from '@/features/cart/cartSlice';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
@@ -33,8 +34,11 @@ export default function Header() {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const cartCount = useSelector(selectCartCount);
+  const wishlist = useSelector(selectWishlist);
 
   // Track window scroll to switch button dynamically
   useEffect(() => {
@@ -101,7 +105,15 @@ export default function Header() {
         {/* Right Section: Search Bar, Wishlist, Cart & Dynamic Auth CTA */}
         <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           {/* Search Box */}
-          <div className="relative hidden md:block w-44 lg:w-52 xl:w-60">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchQuery.trim()) {
+                navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+              }
+            }}
+            className="relative hidden md:block w-44 lg:w-52 xl:w-60"
+          >
             <input
               type="text"
               value={searchQuery}
@@ -109,16 +121,27 @@ export default function Header() {
               placeholder="Search products..."
               className="w-full rounded-full border border-gray-200 bg-[#f8f9fa] py-2 pl-3.5 pr-8 text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
             />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
-          </div>
+            <button
+              type="submit"
+              aria-label="Submit search"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-[#0b3b2c] transition-colors"
+            >
+              <Search className="h-3.5 w-3.5" />
+            </button>
+          </form>
 
           {/* Wishlist Icon */}
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="p-2 text-[#14211d] hover:text-[#0b3b2c] hover:bg-gray-100 rounded-full transition-colors hidden sm:flex"
+            className="relative p-2 text-[#14211d] hover:text-[#0b3b2c] hover:bg-gray-100 rounded-full transition-colors hidden sm:flex"
           >
             <Heart className="h-5 w-5" />
+            {wishlist.length > 0 && (
+              <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#cf7a3a] px-1 text-[9px] font-bold text-white shadow-xs">
+                {wishlist.length}
+              </span>
+            )}
           </Link>
 
           {/* Cart Icon with badge */}
@@ -128,9 +151,16 @@ export default function Header() {
             className="relative p-2 text-[#14211d] hover:text-[#0b3b2c] hover:bg-gray-100 rounded-full transition-colors"
           >
             <ShoppingBag className="h-5 w-5" />
-            <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0b3b2c] px-1 text-[9px] font-bold text-white shadow-xs">
-              0
-            </span>
+            {cartCount > 0 && (
+              <motion.span
+                key={cartCount}
+                initial={{ scale: 0.6 }}
+                animate={{ scale: 1 }}
+                className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0b3b2c] px-1 text-[9px] font-bold text-white shadow-xs"
+              >
+                {cartCount}
+              </motion.span>
+            )}
           </Link>
 
           {/* User Auth CTA Logic:
@@ -246,14 +276,31 @@ export default function Header() {
             className="lg:hidden border-t border-gray-100 bg-white px-5 py-5 space-y-4"
           >
             {/* Search */}
-            <div className="relative">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="relative"
+            >
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
                 className="w-full rounded-full border border-gray-200 bg-[#f8f9fa] py-2 pl-4 pr-10 text-xs text-[#14211d] focus:border-[#0b3b2c] focus:outline-none"
               />
-              <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
-            </div>
+              <button
+                type="submit"
+                aria-label="Submit mobile search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-[#0b3b2c]"
+              >
+                <Search className="h-3.5 w-3.5" />
+              </button>
+            </form>
 
             {/* Links */}
             <nav className="flex flex-col space-y-1 pt-1">
