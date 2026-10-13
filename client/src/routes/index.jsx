@@ -6,6 +6,7 @@ import RoleRoute from '@/routes/RoleRoute';
 import { ADMIN_ROLES, SALES_ROLES } from '@/constants/roles';
 
 import LandingPage from '@/features/landing/pages/LandingPage';
+import ShopPage from '@/features/shop/pages/ShopPage';
 import LoginPage from '@/features/auth/pages/LoginPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import SalesDashboardPage from '@/features/sales/pages/SalesDashboardPage';
@@ -15,7 +16,11 @@ export const router = createBrowserRouter([
   // Public + customer pages
   {
     element: <StoreLayout />,
-    children: [{ path: '/', element: <LandingPage /> }],
+    children: [
+      { path: '/', element: <LandingPage /> },
+      { path: '/shop', element: <ShopPage /> },
+      { path: '/explore', element: <ShopPage /> },
+    ],
   },
   { path: '/login', element: <LoginPage /> },
 
