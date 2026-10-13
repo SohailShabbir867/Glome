@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import {
   SlidersHorizontal,
   Search,
@@ -25,10 +25,20 @@ const ITEMS_PER_PAGE = 9;
 
 export default function ShopPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const productsContainerRef = useRef(null);
 
-  // Read URL query params
-  const initialCategory = searchParams.get('cat') || searchParams.get('category') || 'all';
+  // Read URL query or pathname
+  const getCategoryFromLocation = () => {
+    if (location.pathname === '/men') return 'men';
+    if (location.pathname === '/women') return 'women';
+    if (location.pathname === '/shoes') return 'shoes';
+    if (location.pathname === '/accessories') return 'accessories';
+    return searchParams.get('cat') || searchParams.get('category') || 'all';
+  };
+
+  const initialCategory = getCategoryFromLocation();
   const initialSearch = searchParams.get('search') || '';
   const initialFilter = searchParams.get('filter') || '';
 
@@ -48,29 +58,34 @@ export default function ShopPage() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
-  // Sync state when URL params change
+  // Sync state when URL pathname or search params change
   useEffect(() => {
-    const cat = searchParams.get('cat') || searchParams.get('category');
-    if (cat) setCategory(cat);
+    const activeCat = getCategoryFromLocation();
+    setCategory(activeCat);
     const search = searchParams.get('search');
     if (search !== null) setSearchKeyword(search);
     const filter = searchParams.get('filter');
     if (filter === 'sale') setOnlySale(true);
-  }, [searchParams]);
+  }, [location.pathname, searchParams]);
 
   // Handle generic filter change
   const handleFilterChange = (key, value) => {
     setCurrentPage(1);
     if (key === 'category') {
       setCategory(value);
-      const newParams = new URLSearchParams(searchParams);
-      if (value === 'all') {
-        newParams.delete('cat');
-        newParams.delete('category');
+      if (['/men', '/women', '/shoes', '/accessories'].includes(location.pathname)) {
+        if (value === 'all') navigate('/shop');
+        else navigate(`/${value}`);
       } else {
-        newParams.set('cat', value);
+        const newParams = new URLSearchParams(searchParams);
+        if (value === 'all') {
+          newParams.delete('cat');
+          newParams.delete('category');
+        } else {
+          newParams.set('cat', value);
+        }
+        setSearchParams(newParams);
       }
-      setSearchParams(newParams);
     } else if (key === 'selectedBrands') setSelectedBrands(value);
     else if (key === 'selectedSizes') setSelectedSizes(value);
     else if (key === 'selectedColor') setSelectedColor(value);
@@ -91,7 +106,11 @@ export default function ShopPage() {
     setOnlySale(false);
     setOnlyInStock(false);
     setCurrentPage(1);
-    setSearchParams({});
+    if (['/men', '/women', '/shoes', '/accessories'].includes(location.pathname)) {
+      navigate('/shop');
+    } else {
+      setSearchParams({});
+    }
   };
 
   // Filter and sort items

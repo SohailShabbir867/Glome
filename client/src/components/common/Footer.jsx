@@ -107,32 +107,37 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/shop" className="hover:text-white transition-colors">
-                  Shop
+                  Shop All
                 </Link>
               </li>
               <li>
-                <Link to="/explore?cat=men" className="hover:text-white transition-colors">
-                  Men
+                <Link to="/men" className="hover:text-white transition-colors">
+                  Men&apos;s Clothing
                 </Link>
               </li>
               <li>
-                <Link to="/explore?cat=women" className="hover:text-white transition-colors">
-                  Women
+                <Link to="/women" className="hover:text-white transition-colors">
+                  Women&apos;s Wear
                 </Link>
               </li>
               <li>
-                <Link to="/explore?cat=shoes" className="hover:text-white transition-colors">
-                  Shoes
+                <Link to="/shoes" className="hover:text-white transition-colors">
+                  Footwear
                 </Link>
               </li>
               <li>
-                <Link to="/explore?cat=accessories" className="hover:text-white transition-colors">
+                <Link to="/accessories" className="hover:text-white transition-colors">
                   Accessories
                 </Link>
               </li>
               <li>
-                <Link to="/explore?filter=sale" className="hover:text-white transition-colors">
-                  Sale
+                <Link to="/about" className="hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Contact
                 </Link>
               </li>
             </ul>

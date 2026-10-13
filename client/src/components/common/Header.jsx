@@ -20,11 +20,13 @@ import { selectCartCount, selectWishlist } from '@/features/cart/cartSlice';
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Shop', href: '/shop' },
-  { label: 'Men', href: '/explore?cat=men' },
-  { label: 'Women', href: '/explore?cat=women' },
-  { label: 'Shoes', href: '/explore?cat=shoes' },
-  { label: 'Accessories', href: '/explore?cat=accessories' },
-  { label: 'Sale', href: '/explore?filter=sale', isBadge: true },
+  { label: 'Men', href: '/men' },
+  { label: 'Women', href: '/women' },
+  { label: 'Shoes', href: '/shoes' },
+  { label: 'Accessories', href: '/accessories' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Sale', href: '/shop?filter=sale', isBadge: true },
 ];
 
 export default function Header() {

@@ -50,19 +50,19 @@ export const heroData = {
   sideCards: [
     {
       title: "Men's Wear",
-      link: '/explore?cat=men',
+      link: '/men',
       image:
         'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80',
     },
     {
       title: 'Footwear',
-      link: '/explore?cat=shoes',
+      link: '/shoes',
       image:
         'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=500&q=80',
     },
     {
       title: 'Accessories',
-      link: '/explore?cat=accessories',
+      link: '/accessories',
       image:
         'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80',
     },
@@ -76,7 +76,7 @@ export const circleCategories = [
     subtitle: 'Shirts, Tees, Jackets',
     image:
       'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80',
-    link: '/explore?cat=men',
+    link: '/men',
   },
   {
     id: 'women',
@@ -84,7 +84,7 @@ export const circleCategories = [
     subtitle: 'Dresses, Tops, Sets',
     image:
       'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=400&q=80',
-    link: '/explore?cat=women',
+    link: '/women',
   },
   {
     id: 'shoes',
@@ -92,7 +92,7 @@ export const circleCategories = [
     subtitle: 'Sneakers, Boots, Sandals',
     image:
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80',
-    link: '/explore?cat=shoes',
+    link: '/shoes',
   },
   {
     id: 'accessories',
@@ -100,7 +100,7 @@ export const circleCategories = [
     subtitle: 'Bags, Watches, Sunglasses',
     image:
       'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80',
-    link: '/explore?cat=accessories',
+    link: '/accessories',
   },
   {
     id: 'beauty',
