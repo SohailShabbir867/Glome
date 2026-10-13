@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Eye, ShoppingBag, Star, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,6 +43,8 @@ export default function ProductCard({ product, onQuickView }) {
       ? product.secondaryImage
       : product.image;
 
+  const productUrl = `/product/${product.slug || product.id}`;
+
   return (
     <motion.div
       layout
@@ -56,12 +59,14 @@ export default function ProductCard({ product, onQuickView }) {
       <div>
         {/* Image Container */}
         <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-[#f8f7f5]">
-          <img
-            src={displayImage}
-            alt={product.name}
-            loading="lazy"
-            className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-106"
-          />
+          <Link to={productUrl} className="block h-full w-full">
+            <img
+              src={displayImage}
+              alt={product.name}
+              loading="lazy"
+              className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-106"
+            />
+          </Link>
 
           {/* Badges on Top Left */}
           <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10">
@@ -129,12 +134,11 @@ export default function ProductCard({ product, onQuickView }) {
           </div>
 
           {/* Product Name */}
-          <h3
-            onClick={() => onQuickView(product)}
-            className="font-sans text-xs sm:text-[13.5px] font-semibold text-[#14211d] line-clamp-1 group-hover:text-[#0b3b2c] cursor-pointer transition-colors"
-          >
-            {product.name}
-          </h3>
+          <Link to={productUrl} className="block group">
+            <h3 className="font-sans text-xs sm:text-[13.5px] font-semibold text-[#14211d] line-clamp-1 group-hover:text-[#0b3b2c] transition-colors">
+              {product.name}
+            </h3>
+          </Link>
 
           {/* Color Swatches */}
           {product.colors && product.colors.length > 0 && (
