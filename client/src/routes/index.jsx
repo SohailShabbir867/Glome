@@ -7,6 +7,9 @@ import { ADMIN_ROLES, SALES_ROLES } from '@/constants/roles';
 
 import LandingPage from '@/features/landing/pages/LandingPage';
 import ShopPage from '@/features/shop/pages/ShopPage';
+import ProductDetailPage from '@/features/products/pages/ProductDetailPage';
+import CartPage from '@/features/cart/pages/CartPage';
+import WishlistPage from '@/features/cart/pages/WishlistPage';
 import LoginPage from '@/features/auth/pages/LoginPage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
 import AboutPage from '@/pages/AboutPage';
@@ -27,6 +30,9 @@ export const router = createBrowserRouter([
       { path: '/women', element: <ShopPage /> },
       { path: '/shoes', element: <ShopPage /> },
       { path: '/accessories', element: <ShopPage /> },
+      { path: '/product/:slug', element: <ProductDetailPage /> },
+      { path: '/cart', element: <CartPage /> },
+      { path: '/wishlist', element: <WishlistPage /> },
       { path: '/about', element: <AboutPage /> },
       { path: '/contact', element: <ContactPage /> },
     ],
