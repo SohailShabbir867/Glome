@@ -8,6 +8,7 @@ import {
   RotateCcw,
   Check,
   ShieldCheck,
+  ZoomIn,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +31,26 @@ export default function QuickViewModal({ product, onClose }) {
   );
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
+
+  // Detailing zoom states
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    setZoomPos({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    setIsZoomed(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsZoomed(false);
+    setZoomPos({ x: 50, y: 50 });
+  };
 
   if (!product) return null;
 
@@ -87,17 +108,36 @@ export default function QuickViewModal({ product, onClose }) {
 
           {/* Left: Gallery (Image & Thumbnails) */}
           <div className="w-full md:w-1/2 p-6 bg-[#f9f8f5] flex flex-col justify-between">
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-xs">
+            <div
+              className="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-xs cursor-crosshair sm:cursor-zoom-in select-none group"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <img
                 src={selectedImage || product.image}
                 alt={product.name}
-                className="h-full w-full object-cover object-center transition-all duration-300"
+                style={{
+                  transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                  transform: isZoomed ? 'scale(2.3)' : 'scale(1)',
+                  transition: isZoomed ? 'transform 0.08s ease-out' : 'transform 0.35s ease-out',
+                }}
+                className="h-full w-full object-cover object-center pointer-events-none will-change-transform"
               />
               {product.badge && (
-                <span className="absolute top-3 left-3 rounded-full bg-[#0b3b2c] px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-xs">
+                <span className="absolute top-3 left-3 z-10 rounded-full bg-[#0b3b2c] px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-xs pointer-events-none">
                   {product.badge}
                 </span>
               )}
+              {/* Zoom hint badge */}
+              <div
+                className={`absolute bottom-3 left-3 z-10 flex items-center gap-1 rounded-full bg-black/65 backdrop-blur-md px-2.5 py-1 text-[10px] font-medium text-white transition-opacity duration-300 pointer-events-none ${
+                  isZoomed ? 'opacity-0' : 'opacity-90'
+                }`}
+              >
+                <ZoomIn className="h-3 w-3" />
+                <span>Hover to zoom</span>
+              </div>
             </div>
 
             {/* Thumbnail selector */}
@@ -107,7 +147,10 @@ export default function QuickViewModal({ product, onClose }) {
                   <button
                     key={img + idx}
                     type="button"
-                    onClick={() => setSelectedImage(img)}
+                    onClick={() => {
+                      setSelectedImage(img);
+                      setIsZoomed(false);
+                    }}
                     className={`relative h-16 w-16 overflow-hidden rounded-xl border-2 transition-all ${
                       (selectedImage || product.image) === img
                         ? 'border-[#0b3b2c] scale-105'

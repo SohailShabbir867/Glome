@@ -12,6 +12,7 @@ import {
   Check,
   ChevronDown,
   Ruler,
+  ZoomIn,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PRODUCTS_CATALOG } from '@/features/shop/data/productsData';
@@ -47,6 +48,26 @@ export default function ProductDetailPage() {
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [quickViewProd, setQuickViewProd] = useState(null);
 
+  // Cursor detailing zoom states
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    setZoomPos({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    setIsZoomed(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsZoomed(false);
+    setZoomPos({ x: 50, y: 50 });
+  };
+
   // Sync state when product changes
   useEffect(() => {
     if (product) {
@@ -54,6 +75,8 @@ export default function ProductDetailPage() {
       setSelectedSize(product.sizes?.[0] || 'Standard');
       setSelectedColor(product.colors?.[0]?.name || '');
       setQuantity(1);
+      setIsZoomed(false);
+      setZoomPos({ x: 50, y: 50 });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [product]);
@@ -141,7 +164,10 @@ export default function ProductDetailPage() {
                     <button
                       key={img + idx}
                       type="button"
-                      onClick={() => setActiveImage(img)}
+                      onClick={() => {
+                        setActiveImage(img);
+                        setIsZoomed(false);
+                      }}
                       className={`relative h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden rounded-2xl border-2 transition-all ${
                         isActive
                           ? 'border-[#0b3b2c] ring-2 ring-[#0b3b2c]/20 scale-103'
@@ -159,17 +185,27 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {/* Main Stage Image */}
-            <div className="relative flex-1 aspect-square sm:aspect-4/5 w-full overflow-hidden rounded-3xl bg-white shadow-sm border border-gray-100/90 group">
+            {/* Main Stage Image with Interactive Cursor Detailing Zoom */}
+            <div
+              className="relative flex-1 aspect-square sm:aspect-4/5 w-full overflow-hidden rounded-3xl bg-white shadow-sm border border-gray-100/90 cursor-crosshair sm:cursor-zoom-in select-none group"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <img
                 src={activeImage}
                 alt={product.name}
-                className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                style={{
+                  transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                  transform: isZoomed ? 'scale(2.4)' : 'scale(1)',
+                  transition: isZoomed ? 'transform 0.08s ease-out' : 'transform 0.35s ease-out',
+                }}
+                className="h-full w-full object-cover object-center pointer-events-none will-change-transform"
               />
 
               {/* Badge */}
               {product.badge && (
-                <span className="absolute top-4 left-4 rounded-full bg-[#0b3b2c] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                <span className="absolute top-4 left-4 z-10 rounded-full bg-[#0b3b2c] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm pointer-events-none">
                   {product.badge}
                 </span>
               )}
@@ -179,7 +215,7 @@ export default function ProductDetailPage() {
                 type="button"
                 onClick={handleToggleWishlist}
                 aria-label="Wishlist"
-                className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur-xs text-[#14211d] shadow-md hover:scale-110 active:scale-95 transition-all"
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur-xs text-[#14211d] shadow-md hover:scale-110 active:scale-95 transition-all pointer-events-auto"
               >
                 <Heart
                   className={`h-5 w-5 ${
@@ -187,6 +223,16 @@ export default function ProductDetailPage() {
                   }`}
                 />
               </button>
+
+              {/* Detailing Zoom Hint Pill */}
+              <div
+                className={`absolute bottom-4 left-4 z-10 flex items-center gap-1.5 rounded-full bg-black/65 backdrop-blur-md px-3.5 py-1.5 text-[11px] font-medium tracking-wide text-white transition-opacity duration-300 pointer-events-none ${
+                  isZoomed ? 'opacity-0' : 'opacity-90'
+                }`}
+              >
+                <ZoomIn className="h-3.5 w-3.5 text-white/90" />
+                <span>Roll over to zoom details</span>
+              </div>
             </div>
           </div>
 
