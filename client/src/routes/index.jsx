@@ -8,21 +8,32 @@ import { ADMIN_ROLES, SALES_ROLES } from '@/constants/roles';
 import LandingPage from '@/features/landing/pages/LandingPage';
 import ShopPage from '@/features/shop/pages/ShopPage';
 import LoginPage from '@/features/auth/pages/LoginPage';
+import RegisterPage from '@/features/auth/pages/RegisterPage';
+import AboutPage from '@/pages/AboutPage';
+import ContactPage from '@/pages/ContactPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import SalesDashboardPage from '@/features/sales/pages/SalesDashboardPage';
 import NotFoundPage from '@/components/common/NotFoundPage';
 
 export const router = createBrowserRouter([
-  // Public + customer pages
+  // Public storefront customer pages
   {
     element: <StoreLayout />,
     children: [
       { path: '/', element: <LandingPage /> },
       { path: '/shop', element: <ShopPage /> },
       { path: '/explore', element: <ShopPage /> },
+      { path: '/men', element: <ShopPage /> },
+      { path: '/women', element: <ShopPage /> },
+      { path: '/shoes', element: <ShopPage /> },
+      { path: '/accessories', element: <ShopPage /> },
+      { path: '/about', element: <AboutPage /> },
+      { path: '/contact', element: <ContactPage /> },
     ],
   },
   { path: '/login', element: <LoginPage /> },
+  { path: '/register', element: <RegisterPage /> },
+  { path: '/signup', element: <RegisterPage /> },
 
   // Sales dashboard: sales, admin, super admin
   {
