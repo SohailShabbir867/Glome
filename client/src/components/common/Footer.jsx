@@ -1,6 +1,22 @@
 import { Link } from 'react-router-dom';
 import { ShoppingBag as BagIcon, ArrowUp } from 'lucide-react';
 
+function InstagramIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg className={`${className} fill-current`} viewBox="0 0 24 24">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+    </svg>
+  );
+}
+
+const LOOKBOOK_IMAGES = [
+  { src: '/images/lookbook-1.jpg', tag: '@sophia.mode' },
+  { src: '/images/lookbook-2.jpg', tag: '@marcus.style' },
+  { src: '/images/lookbook-3.jpg', tag: '@elena.living' },
+  { src: '/images/lookbook-4.jpg', tag: '@david.wardrobe' },
+  { src: '/images/lookbook-5.jpg', tag: '@claire.atelier' },
+];
+
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -8,6 +24,48 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-[#0b3b2c] text-white border-t border-[#082e22] text-xs">
+      {/* 1. Community Lookbook Strip */}
+      <div className="bg-[#f7f2ea] text-[#14211d] py-12 border-b border-[#e5dcce]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#0b3b2c]">
+                Community &amp; Lookbook
+              </span>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#14211d] mt-1">
+                Follow Us @glome_official
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-[#596b63] max-w-md">
+              Tag <span className="font-bold text-[#0b3b2c]">#GlomeStyle</span> on Instagram to be
+              featured in our seasonal global lookbook.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+            {LOOKBOOK_IMAGES.map((item, idx) => (
+              <a
+                key={idx}
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative aspect-square overflow-hidden rounded-2xl bg-stone-200 shadow-2xs block"
+              >
+                <img
+                  src={item.src}
+                  alt={`Glome community look ${idx + 1}`}
+                  className="h-full w-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 text-white p-2 text-center">
+                  <InstagramIcon className="h-5 w-5" />
+                  <span className="text-[10px] font-bold tracking-wider">{item.tag}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-18">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand Info */}
@@ -208,8 +266,20 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Payment Icons */}
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#dce7e2]/70">
+          <span>Guaranteed 256-Bit SSL Encrypted Checkout</span>
+          <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-extrabold text-white/90">
+            <span className="bg-white/10 px-2.5 py-1 rounded-lg">VISA</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-lg">MASTERCARD</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-lg">APPLE PAY</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-lg">GOOGLE PAY</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-lg">PAYPAL</span>
+          </div>
+        </div>
+
         {/* Bottom copyright & legal */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#dce7e2]/70">
+        <div className="mt-6 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#dce7e2]/70">
           <p>&copy; {new Date().getFullYear()} Glome. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="hover:text-white transition-colors">
