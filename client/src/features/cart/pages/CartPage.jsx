@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Trash2,
@@ -22,6 +22,7 @@ import {
 const FREE_SHIPPING_THRESHOLD = 50;
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const subtotal = useSelector(selectCartSubtotal);
@@ -167,7 +168,7 @@ export default function CartPage() {
                       </span>
 
                       {/* Quantity Controller */}
-                      <div className="flex items-center rounded-xl border border-gray-200 bg-[#fbf9f5] p-1">
+                      <div className="flex items-center rounded-xl border border-gray-200 bg-[#fbf9f5] p-1 shadow-2xs">
                         <button
                           type="button"
                           onClick={() =>
@@ -180,11 +181,12 @@ export default function CartPage() {
                               })
                             )
                           }
-                          className="h-6 w-6 rounded-lg hover:bg-white text-[#14211d] font-bold flex items-center justify-center transition-colors text-xs"
+                          aria-label="Decrease quantity"
+                          className="h-8 w-8 sm:h-7 sm:w-7 rounded-lg hover:bg-white text-[#14211d] font-bold flex items-center justify-center transition-colors text-sm cursor-pointer"
                         >
                           -
                         </button>
-                        <span className="w-7 text-center text-xs font-bold text-[#14211d]">
+                        <span className="w-8 text-center text-xs font-bold text-[#14211d]">
                           {item.quantity}
                         </span>
                         <button
@@ -199,7 +201,8 @@ export default function CartPage() {
                               })
                             )
                           }
-                          className="h-6 w-6 rounded-lg hover:bg-white text-[#14211d] font-bold flex items-center justify-center transition-colors text-xs"
+                          aria-label="Increase quantity"
+                          className="h-8 w-8 sm:h-7 sm:w-7 rounded-lg hover:bg-white text-[#14211d] font-bold flex items-center justify-center transition-colors text-sm cursor-pointer"
                         >
                           +
                         </button>
@@ -223,7 +226,7 @@ export default function CartPage() {
                           )
                         }
                         aria-label="Remove item"
-                        className="p-1.5 text-gray-400 hover:text-rose-600 transition-colors rounded-lg hover:bg-rose-50"
+                        className="p-2 sm:p-1.5 text-gray-400 hover:text-rose-600 transition-colors rounded-xl hover:bg-rose-50 cursor-pointer"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -320,7 +323,14 @@ export default function CartPage() {
                 {/* Checkout Button */}
                 <button
                   type="button"
-                  onClick={() => alert('Proceeding to checkout with total $' + estimatedTotal.toFixed(2))}
+                  onClick={() =>
+                    navigate('/checkout', {
+                      state: {
+                        discountPercent,
+                        appliedPromo: promoSuccess ? promoCode.trim().toUpperCase() : '',
+                      },
+                    })
+                  }
                   className="w-full flex items-center justify-center gap-2 rounded-full bg-[#0b3b2c] hover:bg-[#124e3b] py-4 text-xs sm:text-sm font-bold text-white shadow-md transition-all active:scale-98 cursor-pointer"
                 >
                   <span>Proceed to Checkout</span>
