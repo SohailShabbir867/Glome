@@ -319,19 +319,31 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Auth CTA in Mobile */}
-            <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+            {/* Auth and Bag in Mobile Drawer */}
+            <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
               <Link
-                to="/wishlist"
-                className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-[#0b3b2c]"
+                to="/cart"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-1.5 text-xs font-semibold text-[#0b3b2c] hover:bg-gray-50 px-2.5 py-1.5 rounded-lg"
               >
-                <Heart className="h-4 w-4" /> Wishlist
+                <ShoppingBag className="h-4 w-4" />
+                <span>Bag ({cartCount})</span>
               </Link>
               <Link
-                to="/login"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#0b3b2c] px-4 py-2 text-xs font-semibold text-white shadow-xs"
+                to="/wishlist"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-[#0b3b2c] px-2.5 py-1.5 rounded-lg"
               >
-                <User className="h-3.5 w-3.5" /> Sign In / Register
+                <Heart className="h-4 w-4" />
+                <span>Saved</span>
+              </Link>
+              <Link
+                to={user ? (user.role === 'admin' ? '/admin' : '/orders') : '/login'}
+                onClick={() => setMobileMenuOpen(false)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#0b3b2c] px-3.5 py-2 text-xs font-semibold text-white shadow-xs"
+              >
+                <User className="h-3.5 w-3.5" />
+                <span>{user ? user.name?.split(' ')[0] : 'Sign In'}</span>
               </Link>
             </div>
           </motion.div>
