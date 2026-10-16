@@ -125,7 +125,7 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] pb-16">
+    <div className="min-h-screen bg-[#faf7f2] pb-28 sm:pb-16">
       {/* 1. Breadcrumbs */}
       <div className="border-b border-gray-200/80 bg-white shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5">
@@ -296,12 +296,12 @@ export default function ProductDetailPage() {
                         key={color.name}
                         type="button"
                         onClick={() => setSelectedColor(color.name)}
-                        className={`group relative flex h-8 w-8 items-center justify-center rounded-full transition-transform hover:scale-110 ${
+                        className={`group relative flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full transition-transform hover:scale-110 cursor-pointer ${
                           isSelected ? 'ring-2 ring-[#0b3b2c] ring-offset-2' : ''
                         }`}
                       >
                         <span
-                          className="h-7 w-7 rounded-full border border-black/10 shadow-2xs flex items-center justify-center"
+                          className="h-8 w-8 sm:h-7 sm:w-7 rounded-full border border-black/10 shadow-2xs flex items-center justify-center"
                           style={{ backgroundColor: color.hex }}
                         >
                           {isSelected && (
@@ -331,7 +331,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={() => setShowSizeGuide(!showSizeGuide)}
-                    className="inline-flex items-center gap-1 text-[#0b3b2c] hover:underline font-semibold"
+                    className="inline-flex items-center gap-1 text-[#0b3b2c] hover:underline font-semibold cursor-pointer"
                   >
                     <Ruler className="h-3.5 w-3.5" />
                     <span>Size Guide</span>
@@ -346,7 +346,7 @@ export default function ProductDetailPage() {
                         key={size}
                         type="button"
                         onClick={() => setSelectedSize(size)}
-                        className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                        className={`min-w-[44px] min-h-[44px] px-4 py-2.5 sm:py-2 rounded-xl text-xs font-semibold border transition-all flex items-center justify-center cursor-pointer ${
                           isSelected
                             ? 'border-[#0b3b2c] bg-[#0b3b2c] text-white shadow-xs'
                             : 'border-gray-200 bg-white text-[#14211d] hover:border-gray-400 hover:bg-gray-50'
@@ -585,6 +585,45 @@ export default function ProductDetailPage() {
           onClose={() => setQuickViewProd(null)}
         />
       )}
+
+      {/* Sticky Mobile Add-to-Bag Action Bar */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200/90 px-4 py-3 shadow-[0_-4px_25px_rgba(0,0,0,0.1)] flex items-center justify-between gap-3">
+        <div className="flex flex-col min-w-0">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-[#708077] truncate">
+            {selectedSize} • {selectedColor}
+          </span>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-base font-extrabold text-[#0b3b2c]">
+              ${(product.price * quantity).toFixed(2)}
+            </span>
+            {product.originalPrice && (
+              <span className="text-xs text-gray-400 line-through">
+                ${(product.originalPrice * quantity).toFixed(2)}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className={`flex-1 flex items-center justify-center gap-2 rounded-full py-3 px-5 text-xs font-bold text-white shadow-md transition-all active:scale-98 cursor-pointer ${
+            justAdded ? 'bg-emerald-600' : 'bg-[#0b3b2c] active:bg-[#124e3b]'
+          }`}
+        >
+          {justAdded ? (
+            <>
+              <Check className="h-4 w-4" />
+              <span>Added to Bag!</span>
+            </>
+          ) : (
+            <>
+              <ShoppingBag className="h-4 w-4" />
+              <span>Add to Bag</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
