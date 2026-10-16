@@ -14,6 +14,7 @@ import LoginPage from '@/features/auth/pages/LoginPage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
 import AboutPage from '@/pages/AboutPage';
 import ContactPage from '@/pages/ContactPage';
+import CheckoutPage from '@/features/checkout/pages/CheckoutPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import SalesDashboardPage from '@/features/sales/pages/SalesDashboardPage';
 import NotFoundPage from '@/components/common/NotFoundPage';
@@ -37,6 +38,8 @@ export const router = createBrowserRouter([
       { path: '/contact', element: <ContactPage /> },
     ],
   },
+  { path: '/checkout', element: <CheckoutPage /> },
+  { path: '/payment', element: <CheckoutPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
   { path: '/signup', element: <RegisterPage /> },
