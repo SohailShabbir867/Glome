@@ -111,11 +111,26 @@ export const cartSlice = createSlice({
     clearLastAdded: (state) => {
       state.lastAddedItem = null;
     },
+    clearCart: (state) => {
+      state.items = [];
+      state.lastAddedItem = null;
+      try {
+        localStorage.removeItem('glome_cart');
+      } catch {
+        // Ignore
+      }
+    },
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, toggleWishlist, clearLastAdded } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+  toggleWishlist,
+  clearLastAdded,
+  clearCart,
+} = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart?.items || [];
 export const selectCartCount = (state) =>
