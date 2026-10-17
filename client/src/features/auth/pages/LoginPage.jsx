@@ -25,6 +25,52 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const handleDemoLogin = (role) => {
+    if (role === 'admin') {
+      dispatch(
+        setCredentials({
+          user: {
+            id: 'usr-admin-1',
+            name: 'Sohail Shabbir',
+            email: 'sohail@glome.com',
+            role: 'admin',
+            title: 'Administrator',
+          },
+          accessToken: 'mock-admin-token-' + Date.now(),
+        })
+      );
+      navigate('/admin');
+    } else if (role === 'sales') {
+      dispatch(
+        setCredentials({
+          user: {
+            id: 'usr-sales-1',
+            name: 'Ali Raza',
+            email: 'ali.raza@glome.com',
+            role: 'sales',
+            title: 'Salesman',
+          },
+          accessToken: 'mock-sales-token-' + Date.now(),
+        })
+      );
+      navigate('/sales');
+    } else {
+      dispatch(
+        setCredentials({
+          user: {
+            id: 'usr-cust-1',
+            name: 'VIP Customer',
+            email: 'customer@glome.com',
+            role: 'customer',
+            title: 'VIP Shopper',
+          },
+          accessToken: 'mock-cust-token-' + Date.now(),
+        })
+      );
+      navigate('/');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -39,20 +85,37 @@ export default function LoginPage() {
     // Mock authentication with persistent user session
     setTimeout(() => {
       setLoading(false);
+      const lower = email.toLowerCase();
+      const isAdminLogin = lower.includes('admin') || lower === 'sohail@glome.com';
+      const isSalesLogin = lower.includes('sales') || lower === 'ali.raza@glome.com';
+
       const mockUser = {
-        id: 'usr-1',
-        name: email.split('@')[0].replace('.', ' '),
+        id: isAdminLogin ? 'usr-admin-1' : isSalesLogin ? 'usr-sales-1' : 'usr-1',
+        name: isAdminLogin
+          ? 'Sohail Shabbir'
+          : isSalesLogin
+          ? 'Ali Raza'
+          : email.split('@')[0].replace('.', ' '),
         email,
-        role: 'customer',
+        role: isAdminLogin ? 'admin' : isSalesLogin ? 'sales' : 'customer',
+        title: isAdminLogin ? 'Administrator' : isSalesLogin ? 'Salesman' : 'Customer',
       };
+
       dispatch(
         setCredentials({
           user: mockUser,
           accessToken: 'mock-jwt-token-' + Date.now(),
         })
       );
-      navigate('/');
-    }, 800);
+
+      if (isAdminLogin) {
+        navigate('/admin');
+      } else if (isSalesLogin) {
+        navigate('/sales');
+      } else {
+        navigate('/');
+      }
+    }, 600);
   };
 
   return (
@@ -137,9 +200,47 @@ export default function LoginPage() {
         {/* Center Form Container */}
         <div className="mx-auto w-full max-w-md py-8 space-y-6">
           <div className="space-y-2">
-            <h1 className="font-serif text-3xl font-bold text-[#14211d]">Welcome Back</h1>
-            <p className="text-xs sm:text-sm text-[#596b63]">
-              Sign in to manage your bag, track orders, and view member pricing.
+            <h1 className="font-serif text-3xl font-bold text-[#012D1D]">Welcome Back</h1>
+            <p className="text-xs sm:text-sm text-gray-500">
+              Sign in to manage your bag, track orders, or access Admin & Sales portals.
+            </p>
+          </div>
+
+          {/* Quick Demo Access Pills (RoomBridge Styled) */}
+          <div
+            className="rounded-2xl p-4 border space-y-2.5 shadow-xs"
+            style={{ backgroundColor: '#F7F4EF', borderColor: '#E8E2D9' }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500">
+                ⚡ Quick 1-Click Demo Portals
+              </span>
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                Instant Access
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('admin')}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
+                style={{ backgroundColor: '#012D1D' }}
+              >
+                <ShieldCheck className="h-4 w-4" style={{ color: '#FFAB69' }} />
+                <span>Login as Admin</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('sales')}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
+                style={{ backgroundColor: '#8E4E14' }}
+              >
+                <Truck className="h-4 w-4" style={{ color: '#FFAB69' }} />
+                <span>Login as Salesman</span>
+              </button>
+            </div>
+            <p className="text-[11px] text-gray-500 text-center">
+              Admin: <span className="font-mono font-bold text-[#012D1D]">admin@glome.com</span> • Sales: <span className="font-mono font-bold text-[#012D1D]">sales@glome.com</span>
             </p>
           </div>
 
@@ -197,7 +298,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-xs font-bold text-[#14211d] mb-1.5">
+              <label className="block text-xs font-bold text-[#012D1D] mb-1.5">
                 Email Address
               </label>
               <div className="relative">
@@ -206,8 +307,8 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. alex@example.com"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs sm:text-sm text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none transition-all"
+                  placeholder="e.g. admin@glome.com"
+                  className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs sm:text-sm text-[#012D1D] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none transition-all"
                 />
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               </div>
@@ -216,10 +317,10 @@ export default function LoginPage() {
             {/* Password */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-[#14211d]">Password</label>
+                <label className="text-xs font-bold text-[#012D1D]">Password</label>
                 <Link
                   to="/forgot-password"
-                  className="text-[11px] font-semibold text-[#0b3b2c] hover:underline"
+                  className="text-[11px] font-semibold text-[#8E4E14] hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -231,7 +332,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-10 text-xs sm:text-sm text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none transition-all"
+                  className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-10 text-xs sm:text-sm text-[#012D1D] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none transition-all"
                 />
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <button
@@ -251,7 +352,7 @@ export default function LoginPage() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-[#0b3b2c] focus:ring-[#0b3b2c]"
+                  className="h-4 w-4 rounded border-gray-300 text-[#012D1D] focus:ring-[#012D1D]"
                 />
                 <span>Remember me for 30 days</span>
               </label>
@@ -261,7 +362,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-[#0b3b2c] hover:bg-[#124e3b] py-3.5 text-xs sm:text-sm font-bold text-white shadow-md transition-all active:scale-98 disabled:opacity-60 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 min-h-[44px] text-xs sm:text-sm font-bold text-white shadow-md transition-all active:scale-98 disabled:opacity-60 cursor-pointer hover:opacity-90"
+              style={{ backgroundColor: '#012D1D' }}
             >
               {loading ? (
                 <span>Signing in...</span>
@@ -278,11 +380,11 @@ export default function LoginPage() {
         {/* Footer info */}
         <div className="pt-4 text-center text-[11px] text-[#708077]">
           Protected by 256-bit SSL encryption. By signing in, you agree to Glome&apos;s{' '}
-          <Link to="/terms" className="underline hover:text-[#0b3b2c]">
+          <Link to="/terms" className="underline hover:text-[#012D1D]">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link to="/privacy" className="underline hover:text-[#0b3b2c]">
+          <Link to="/privacy" className="underline hover:text-[#012D1D]">
             Privacy Policy
           </Link>
           .
