@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Wallet,
   ShoppingBag,
@@ -11,9 +12,12 @@ import {
   Tag,
   Sparkles,
   X,
+  ShieldAlert,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import EcommercePerformanceChart from '@/components/dashboard/EcommercePerformanceChart';
+import { selectCurrentUser } from '@/features/auth/authSlice';
+import { hasPermission, ROLES } from '@/constants/roles';
 
 // RoomBridge Exact Design Tokens
 const DK = '#012D1D';
@@ -32,6 +36,7 @@ import AdminReportsTab from '../components/AdminReportsTab';
 import AdminPaymentsTab from '../components/AdminPaymentsTab';
 import AdminDiscountsTab from '../components/AdminDiscountsTab';
 import AdminSettingsTab from '../components/AdminSettingsTab';
+
 
 // Mock Data for Overview
 const INITIAL_ORDERS = [
@@ -84,6 +89,7 @@ const CONTACT_MESSAGES = [
 export default function AdminDashboardPage() {
   const [searchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'dashboard';
+  const user = useSelector(selectCurrentUser);
 
   const [orders] = useState(INITIAL_ORDERS);
   const [lowStock, setLowStock] = useState(INITIAL_LOW_STOCK);
@@ -123,6 +129,43 @@ export default function AdminDashboardPage() {
     setRestockItem(null);
   };
 
+  // RBAC Access Control Guard: check if current user has permission for the requested sub-page
+  if (activeTab !== 'dashboard' && !hasPermission(user, activeTab)) {
+    return (
+      <div
+        className="rounded-3xl bg-white p-8 sm:p-12 border text-center max-w-xl mx-auto space-y-4 my-12 shadow-sm"
+        style={{ borderColor: BORDER }}
+      >
+        <div
+          className="h-16 w-16 rounded-2xl mx-auto flex items-center justify-center font-bold text-2xl shadow-sm"
+          style={{ backgroundColor: `${ACC}25`, color: DK }}
+        >
+          <ShieldAlert className="h-8 w-8 text-rose-600" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold" style={{ color: DK }}>
+          Access Restricted
+        </h2>
+        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+          Your staff account (<strong>{user?.name || 'Staff Member'}</strong>) does not currently have permission to access the{' '}
+          <strong className="uppercase">{activeTab}</strong> module.
+        </p>
+        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs text-left">
+          <strong>Need Access?</strong> Please contact the Super Administrator (
+          <strong>Sohail Shabbir</strong>) to have this dashboard module assigned to your role permissions.
+        </div>
+        <div className="pt-2">
+          <Link
+            to="/admin"
+            className="inline-flex items-center justify-center px-6 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer"
+            style={{ backgroundColor: DK }}
+          >
+            Return to Overview Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   // Render Sub-Pages when tab query param is present
   if (activeTab === 'orders') return <AdminOrdersTab />;
   if (activeTab === 'products') return <AdminProductsTab />;
@@ -157,10 +200,16 @@ export default function AdminDashboardPage() {
               style={{ backgroundColor: `${ACC}25`, color: ACC }}
             >
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Glome Store Administration</span>
+              <span>
+                {user?.role === ROLES.SUPER_ADMIN
+                  ? 'Super Administrator Authority'
+                  : user?.role === ROLES.ADMIN
+                  ? 'Store Administrator Portal'
+                  : 'Operational Management Portal'}
+              </span>
             </div>
             <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-white">
-              Good Morning, Sohail Shabbir 👋
+              Good Morning, {user?.name || 'Sohail Shabbir'} 👋
             </h1>
             <p className="text-xs sm:text-sm text-white/70 max-w-lg">
               Here is what is happening across your mall today. Sales are up{' '}

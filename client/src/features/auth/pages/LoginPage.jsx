@@ -13,6 +13,7 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { setCredentials } from '@/features/auth/authSlice';
+import { ROLES, DEFAULT_ROLE_PERMISSIONS } from '@/constants/roles';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -30,13 +31,14 @@ export default function LoginPage() {
       dispatch(
         setCredentials({
           user: {
-            id: 'usr-admin-1',
+            id: 'usr-superadmin-1',
             name: 'Sohail Shabbir',
             email: 'sohail@glome.com',
-            role: 'admin',
-            title: 'Administrator',
+            role: ROLES.SUPER_ADMIN,
+            title: 'Super Administrator',
+            permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.SUPER_ADMIN]],
           },
-          accessToken: 'mock-admin-token-' + Date.now(),
+          accessToken: 'mock-superadmin-token-' + Date.now(),
         })
       );
       navigate('/admin');
@@ -46,9 +48,10 @@ export default function LoginPage() {
           user: {
             id: 'usr-sales-1',
             name: 'Ali Raza',
-            email: 'ali.raza@glome.com',
-            role: 'sales',
-            title: 'Salesman',
+            email: 'ali.raza@glomemall.com',
+            role: ROLES.SALES,
+            title: 'Lead Sales Representative',
+            permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.SALES]],
           },
           accessToken: 'mock-sales-token-' + Date.now(),
         })
@@ -61,8 +64,9 @@ export default function LoginPage() {
             id: 'usr-cust-1',
             name: 'VIP Customer',
             email: 'customer@glome.com',
-            role: 'customer',
+            role: ROLES.CUSTOMER,
             title: 'VIP Shopper',
+            permissions: [],
           },
           accessToken: 'mock-cust-token-' + Date.now(),
         })
@@ -86,19 +90,43 @@ export default function LoginPage() {
     setTimeout(() => {
       setLoading(false);
       const lower = email.toLowerCase();
-      const isAdminLogin = lower.includes('admin') || lower === 'sohail@glome.com';
+      const isSuperAdminLogin = lower.includes('super') || lower === 'sohail@glome.com';
+      const isAdminLogin = lower.includes('admin');
       const isSalesLogin = lower.includes('sales') || lower === 'ali.raza@glome.com';
 
+      const assignedRole = isSuperAdminLogin
+        ? ROLES.SUPER_ADMIN
+        : isAdminLogin
+        ? ROLES.ADMIN
+        : isSalesLogin
+        ? ROLES.SALES
+        : ROLES.CUSTOMER;
+
       const mockUser = {
-        id: isAdminLogin ? 'usr-admin-1' : isSalesLogin ? 'usr-sales-1' : 'usr-1',
-        name: isAdminLogin
+        id: isSuperAdminLogin
+          ? 'usr-superadmin-1'
+          : isAdminLogin
+          ? 'usr-admin-1'
+          : isSalesLogin
+          ? 'usr-sales-1'
+          : 'usr-1',
+        name: isSuperAdminLogin
           ? 'Sohail Shabbir'
+          : isAdminLogin
+          ? 'Store Administrator'
           : isSalesLogin
           ? 'Ali Raza'
           : email.split('@')[0].replace('.', ' '),
         email,
-        role: isAdminLogin ? 'admin' : isSalesLogin ? 'sales' : 'customer',
-        title: isAdminLogin ? 'Administrator' : isSalesLogin ? 'Salesman' : 'Customer',
+        role: assignedRole,
+        title: isSuperAdminLogin
+          ? 'Super Administrator'
+          : isAdminLogin
+          ? 'Store Administrator'
+          : isSalesLogin
+          ? 'Sales Representative'
+          : 'Customer',
+        permissions: [...(DEFAULT_ROLE_PERMISSIONS[assignedRole] || [])],
       };
 
       dispatch(
@@ -108,7 +136,7 @@ export default function LoginPage() {
         })
       );
 
-      if (isAdminLogin) {
+      if (isSuperAdminLogin || isAdminLogin) {
         navigate('/admin');
       } else if (isSalesLogin) {
         navigate('/sales');
@@ -227,7 +255,7 @@ export default function LoginPage() {
                 style={{ backgroundColor: '#012D1D' }}
               >
                 <ShieldCheck className="h-4 w-4" style={{ color: '#FFAB69' }} />
-                <span>Login as Admin</span>
+                <span>Super Admin (Sohail)</span>
               </button>
               <button
                 type="button"
@@ -236,11 +264,11 @@ export default function LoginPage() {
                 style={{ backgroundColor: '#8E4E14' }}
               >
                 <Truck className="h-4 w-4" style={{ color: '#FFAB69' }} />
-                <span>Login as Salesman</span>
+                <span>Salesman (Ali Raza)</span>
               </button>
             </div>
             <p className="text-[11px] text-gray-500 text-center">
-              Admin: <span className="font-mono font-bold text-[#012D1D]">admin@glome.com</span> • Sales: <span className="font-mono font-bold text-[#012D1D]">sales@glome.com</span>
+              Super Admin: <span className="font-mono font-bold text-[#012D1D]">sohail@glome.com</span> • Sales: <span className="font-mono font-bold text-[#012D1D]">sales@glome.com</span>
             </p>
           </div>
 

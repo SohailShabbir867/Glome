@@ -26,13 +26,25 @@ import {
   ArrowRightLeft,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { selectCurrentUser, switchRole } from '@/features/auth/authSlice';
+import {
+  selectCurrentUser,
+  selectOriginalUser,
+  selectIsImpersonating,
+  stopImpersonation,
+} from '@/features/auth/authSlice';
+import {
+  ROLES,
+  ROLE_LABELS,
+  hasPermission,
+} from '@/constants/roles';
 
 export default function DashboardLayout({ title: _title }) {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const originalUser = useSelector(selectOriginalUser);
+  const isImpersonating = useSelector(selectIsImpersonating);
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
@@ -47,49 +59,73 @@ export default function DashboardLayout({ title: _title }) {
   const CR = '#F7F4EF'; // Cream Background
   const BORDER = '#E8E2D9'; // Stone Warm Border
 
-  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
+  const isSuperAdmin = user?.role === ROLES.SUPER_ADMIN;
+  const isAdmin =
+    user?.role === ROLES.ADMIN ||
+    user?.role === ROLES.SUPER_ADMIN ||
+    user?.role === ROLES.INVENTORY_MANAGER;
+  const isAdminPortal = location.pathname.startsWith('/admin');
 
-  // Admin Navigation Menu
+  // Admin Navigation Menu with Granular Permission Keys
   const adminNav = [
-    { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-    { label: 'Orders', path: '/admin?tab=orders', icon: ShoppingBag, badge: '12' },
-    { label: 'Products', path: '/admin?tab=products', icon: Package },
-    { label: 'Inventory', path: '/admin?tab=inventory', icon: Layers },
-    { label: 'Customers', path: '/admin?tab=customers', icon: Users },
-    { label: 'Salesmen / Staff', path: '/admin?tab=staff', icon: UserCheck },
-    { label: 'Contacts & Messages', path: '/admin?tab=messages', icon: MessageSquare, badge: '8' },
-    { label: 'Reports', path: '/admin?tab=reports', icon: FileText },
-    { label: 'Payments', path: '/admin?tab=payments', icon: CreditCard },
-    { label: 'Discounts', path: '/admin?tab=discounts', icon: Percent },
-    { label: 'Settings', path: '/admin?tab=settings', icon: Settings },
+    { label: 'Dashboard', path: '/admin', icon: LayoutDashboard, permissionKey: 'dashboard' },
+    { label: 'Orders', path: '/admin?tab=orders', icon: ShoppingBag, badge: '12', permissionKey: 'orders' },
+    { label: 'Products', path: '/admin?tab=products', icon: Package, permissionKey: 'products' },
+    { label: 'Inventory', path: '/admin?tab=inventory', icon: Layers, permissionKey: 'inventory' },
+    { label: 'Customers', path: '/admin?tab=customers', icon: Users, permissionKey: 'customers' },
+    { label: 'Staff & Roles', path: '/admin?tab=staff', icon: UserCheck, permissionKey: 'staff' },
+    { label: 'Contacts & Messages', path: '/admin?tab=messages', icon: MessageSquare, badge: '8', permissionKey: 'messages' },
+    { label: 'Reports', path: '/admin?tab=reports', icon: FileText, permissionKey: 'reports' },
+    { label: 'Payments', path: '/admin?tab=payments', icon: CreditCard, permissionKey: 'payments' },
+    { label: 'Discounts', path: '/admin?tab=discounts', icon: Percent, permissionKey: 'discounts' },
+    { label: 'Settings', path: '/admin?tab=settings', icon: Settings, permissionKey: 'settings' },
   ];
 
-  // Salesman Navigation Menu
+  // Salesman Navigation Menu with Granular Permission Keys
   const salesNav = [
-    { label: 'Dashboard', path: '/sales', icon: LayoutDashboard },
-    { label: 'Orders', path: '/sales?tab=orders', icon: ShoppingBag, badge: '18' },
-    { label: 'My Sales', path: '/sales?tab=sales', icon: FileText },
-    { label: 'Customers', path: '/sales?tab=customers', icon: Users },
-    { label: 'Inventory (Stock)', path: '/sales?tab=inventory', icon: Layers },
-    { label: 'Packing Requests', path: '/sales?tab=packing', icon: Box, badge: '6' },
-    { label: 'Deliveries', path: '/sales?tab=deliveries', icon: Truck, badge: '4' },
-    { label: 'Reported Issues & Exchanges', path: '/sales?tab=exchanges', icon: RotateCcw, badge: '3' },
-    { label: 'Messages', path: '/sales?tab=messages', icon: MessageSquare, badge: '5' },
-    { label: 'Earnings', path: '/sales?tab=earnings', icon: CreditCard },
-    { label: 'Settings', path: '/sales?tab=settings', icon: Settings },
+    { label: 'Dashboard', path: '/sales', icon: LayoutDashboard, permissionKey: 'dashboard' },
+    { label: 'Orders', path: '/sales?tab=orders', icon: ShoppingBag, badge: '18', permissionKey: 'orders' },
+    { label: 'My Sales', path: '/sales?tab=sales', icon: FileText, permissionKey: 'earnings' },
+    { label: 'Customers', path: '/sales?tab=customers', icon: Users, permissionKey: 'customers' },
+    { label: 'Inventory (Stock)', path: '/sales?tab=inventory', icon: Layers, permissionKey: 'inventory' },
+    { label: 'Packing Requests', path: '/sales?tab=packing', icon: Box, badge: '6', permissionKey: 'packing' },
+    { label: 'Deliveries', path: '/sales?tab=deliveries', icon: Truck, badge: '4', permissionKey: 'deliveries' },
+    { label: 'Reported Issues & Exchanges', path: '/sales?tab=exchanges', icon: RotateCcw, badge: '3', permissionKey: 'exchanges' },
+    { label: 'Messages', path: '/sales?tab=messages', icon: MessageSquare, badge: '5', permissionKey: 'messages' },
+    { label: 'Earnings', path: '/sales?tab=earnings', icon: CreditCard, permissionKey: 'earnings' },
+    { label: 'Settings', path: '/sales?tab=settings', icon: Settings, permissionKey: 'settings' },
   ];
 
-  const currentNav = isAdmin ? adminNav : salesNav;
+  // Dynamically filter nav items according to the active user's permissions
+  const filteredAdminNav = adminNav.filter((item) => hasPermission(user, item.permissionKey));
+
+  // If a salesman has been granted extra administrative permissions by Super Admin, dynamically append them!
+  const extraSalesItems = [];
+  if (hasPermission(user, 'products') && !salesNav.some((i) => i.permissionKey === 'products')) {
+    extraSalesItems.push({ label: 'Products Catalog', path: '/admin?tab=products', icon: Package, permissionKey: 'products' });
+  }
+  if (hasPermission(user, 'reports') && !salesNav.some((i) => i.permissionKey === 'reports')) {
+    extraSalesItems.push({ label: 'Analytics Reports', path: '/admin?tab=reports', icon: FileText, permissionKey: 'reports' });
+  }
+  if (hasPermission(user, 'discounts') && !salesNav.some((i) => i.permissionKey === 'discounts')) {
+    extraSalesItems.push({ label: 'Discounts & Promos', path: '/admin?tab=discounts', icon: Percent, permissionKey: 'discounts' });
+  }
+
+  const filteredSalesNav = [
+    ...salesNav.filter((item) => hasPermission(user, item.permissionKey)),
+    ...extraSalesItems,
+  ];
+
+  const currentNav = isAdminPortal ? filteredAdminNav : filteredSalesNav;
 
   const handleToggleRole = () => {
-    if (isAdmin) {
-      dispatch(switchRole('sales'));
+    if (isAdminPortal) {
       navigate('/sales');
     } else {
-      dispatch(switchRole('admin'));
       navigate('/admin');
     }
   };
+
 
   return (
     <div className="min-h-screen text-[#012D1D] flex font-sans" style={{ backgroundColor: CR }}>
@@ -123,7 +159,11 @@ export default function DashboardLayout({ title: _title }) {
                 GLOME
               </div>
               <div className="text-[11px] tracking-wider uppercase font-semibold mt-1 truncate" style={{ color: ACC }}>
-                {isAdmin ? 'Store Administration' : 'Sales Representative'}
+                {isSuperAdmin
+                  ? 'Super Administrator'
+                  : isAdmin
+                  ? 'Store Administration'
+                  : ROLE_LABELS[user?.role] || 'Sales Representative'}
               </div>
             </div>
           </Link>
@@ -205,10 +245,10 @@ export default function DashboardLayout({ title: _title }) {
             {isSidebarHovered && (
               <div className="min-w-0 flex-1">
                 <p className="text-white text-xs font-semibold truncate leading-tight">
-                  {user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}
+                  {user?.name || (isSuperAdmin ? 'Sohail Shabbir' : isAdmin ? 'Store Admin' : 'Ali Raza')}
                 </p>
                 <p className="text-[11px] truncate mt-0.5" style={{ color: `${ACC}cc` }}>
-                  {isAdmin ? 'Administrator' : 'Sales Representative'}
+                  {ROLE_LABELS[user?.role] || (isSuperAdmin ? 'Super Administrator' : isAdmin ? 'Store Administrator' : 'Sales Representative')}
                 </p>
               </div>
             )}
@@ -356,11 +396,21 @@ export default function DashboardLayout({ title: _title }) {
                   {user?.name ? user.name[0] : (isAdmin ? 'S' : 'A')}
                 </div>
                 <div className="hidden sm:flex flex-col text-left">
-                  <span className="text-xs font-bold leading-none" style={{ color: DK }}>
-                    {user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-bold leading-none" style={{ color: DK }}>
+                      {user?.name || (isSuperAdmin ? 'Sohail Shabbir' : 'Ali Raza')}
+                    </span>
+                    {isSuperAdmin && (
+                      <span
+                        className="text-[9px] font-extrabold px-1.5 py-0.2 rounded"
+                        style={{ backgroundColor: ACC, color: DK }}
+                      >
+                        Super Admin
+                      </span>
+                    )}
+                  </div>
                   <span className="text-xs text-gray-500 font-medium capitalize mt-0.5">
-                    {isAdmin ? 'Administrator' : 'Sales Representative'}
+                    {ROLE_LABELS[user?.role] || (isAdmin ? 'Administrator' : 'Sales Representative')}
                   </span>
                 </div>
                 <ChevronDown className="h-3.5 w-3.5 text-gray-400 hidden sm:block" />
@@ -372,25 +422,57 @@ export default function DashboardLayout({ title: _title }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-52 rounded-2xl bg-white shadow-xl border py-2 z-50 text-xs"
+                    className="absolute right-0 mt-2 w-64 rounded-2xl bg-white shadow-xl border py-2 z-50 text-xs"
                     style={{ borderColor: BORDER }}
                   >
                     <div className="px-4 py-2 border-b" style={{ borderColor: BORDER }}>
-                      <div className="font-bold" style={{ color: DK }}>{user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}</div>
+                      <div className="font-bold flex items-center justify-between" style={{ color: DK }}>
+                        <span>{user?.name || (isSuperAdmin ? 'Sohail Shabbir' : 'Ali Raza')}</span>
+                        {isSuperAdmin && (
+                          <span
+                            className="text-[9px] font-bold px-1.5 py-0.2 rounded"
+                            style={{ backgroundColor: ACC, color: DK }}
+                          >
+                            Super
+                          </span>
+                        )}
+                      </div>
                       <div className="text-gray-400 truncate">{user?.email || 'admin@glomemall.com'}</div>
+                      <div className="text-[11px] font-semibold text-emerald-700 mt-1">
+                        Role: {ROLE_LABELS[user?.role] || user?.role}
+                      </div>
                     </div>
+
+                    {isImpersonating && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          dispatch(stopImpersonation());
+                          setUserMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-stone-50 flex items-center gap-2 font-bold text-rose-700"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                        <span>Exit Test Preview Mode</span>
+                      </button>
+                    )}
+
                     <button
                       type="button"
-                      onClick={handleToggleRole}
+                      onClick={() => {
+                        handleToggleRole();
+                        setUserMenuOpen(false);
+                      }}
                       className="w-full text-left px-4 py-2 hover:bg-stone-50 flex items-center gap-2 font-semibold"
                       style={{ color: DK }}
                     >
                       <ArrowRightLeft className="h-3.5 w-3.5" style={{ color: BTN }} />
-                      <span>{isAdmin ? 'Switch to Sales View' : 'Switch to Admin View'}</span>
+                      <span>{isAdminPortal ? 'Switch to Sales View' : 'Switch to Admin View'}</span>
                     </button>
+
                     <Link
                       to="/"
-                      className="block px-4 py-2 text-gray-700 hover:bg-stone-50"
+                      className="block px-4 py-2 text-gray-700 hover:bg-stone-50 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       Customer Storefront
@@ -401,6 +483,28 @@ export default function DashboardLayout({ title: _title }) {
             </div>
           </div>
         </header>
+
+        {/* Impersonation Banner for Super Admin */}
+        {isImpersonating && (
+          <div
+            className="px-4 sm:px-6 py-2.5 text-xs font-bold text-white flex flex-wrap items-center justify-between gap-3 shadow-xs sticky top-18 z-30"
+            style={{ backgroundColor: BTN }}
+          >
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 shrink-0" style={{ color: ACC }} />
+              <span>
+                Super Admin Test View: Previewing portal as <strong>{user?.name}</strong> ({ROLE_LABELS[user?.role] || user?.role}) with custom assigned permissions.
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => dispatch(stopImpersonation())}
+              className="rounded-xl px-3.5 py-1.5 bg-white text-gray-900 font-extrabold hover:bg-stone-100 transition-colors cursor-pointer text-xs shadow-2xs"
+            >
+              Exit Test View ({originalUser?.name || 'Super Admin'})
+            </button>
+          </div>
+        )}
 
         {/* Dynamic Nested Page Content */}
         <main className="p-4 sm:p-6 lg:p-8">

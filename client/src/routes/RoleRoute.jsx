@@ -20,8 +20,18 @@ export default function RoleRoute({ allowedRoles }) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to={HOME_BY_ROLE[user.role] || '/'} replace />;
+  if (allowedRoles) {
+    const isRoleAllowed = allowedRoles.includes(user.role);
+    // Also allow access if staff member has custom assigned permissions for that portal
+    const hasElevatedStaffAccess =
+      Array.isArray(user.permissions) &&
+      user.permissions.some((p) =>
+        ['products', 'inventory', 'reports', 'discounts', 'orders'].includes(p)
+      );
+
+    if (!isRoleAllowed && !hasElevatedStaffAccess) {
+      return <Navigate to={HOME_BY_ROLE[user.role] || '/'} replace />;
+    }
   }
 
   return <Outlet />;
