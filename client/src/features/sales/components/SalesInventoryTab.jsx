@@ -161,7 +161,7 @@ export default function SalesInventoryTab() {
             Restock Status
           </span>
           <div className="font-serif text-lg font-bold text-gray-800 flex items-center gap-1.5 mt-1">
-            <Warehouse className="h-5 w-5 text-[#0b3b2c]" />
+            <Warehouse className="h-5 w-5 text-[#012D1D]" />
             <span>Managed by Head Admin</span>
           </div>
           <p className="text-xs text-gray-400">Automatic purchase orders active</p>
@@ -176,7 +176,7 @@ export default function SalesInventoryTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search product name, category, or size (e.g., 42, XL)..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -189,7 +189,7 @@ export default function SalesInventoryTab() {
               onClick={() => setFilterStatus(st)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterStatus === st
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -240,7 +240,7 @@ export default function SalesInventoryTab() {
                 <div className="space-y-1.5 bg-gray-50 p-3 rounded-2xl border border-gray-100">
                   <div className="flex justify-between text-xs">
                     <span className="text-gray-500 font-semibold">Available Units:</span>
-                    <span className={`font-bold ${isLow ? 'text-rose-600' : 'text-[#0b3b2c]'}`}>
+                    <span className={`font-bold ${isLow ? 'text-rose-600' : 'text-[#012D1D]'}`}>
                       {item.stock} / {item.maxStock} units
                     </span>
                   </div>

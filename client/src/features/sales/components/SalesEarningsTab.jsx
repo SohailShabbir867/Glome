@@ -38,7 +38,7 @@ export default function SalesEarningsTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -62,7 +62,7 @@ export default function SalesEarningsTab() {
           onClick={() => showToast('Commission payslip downloaded.')}
           className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 px-4 py-2.5 min-h-[44px] text-xs font-bold text-gray-700 shadow-2xs transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <Download className="h-4 w-4 text-[#0b3b2c]" />
+          <Download className="h-4 w-4 text-[#012D1D]" />
           <span>Download Payslip</span>
         </button>
       </div>
@@ -86,7 +86,7 @@ export default function SalesEarningsTab() {
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             Commission Rate
           </span>
-          <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">5.0%</div>
+          <div className="font-serif text-2xl font-extrabold text-[#012D1D]">5.0%</div>
           <p className="text-xs text-gray-400">Total: ${totalCommission.toFixed(2)} earned</p>
         </div>
 
@@ -134,11 +134,11 @@ export default function SalesEarningsTab() {
             <tbody className="divide-y divide-gray-100">
               {ledger.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50/70 transition-colors">
-                  <td className="py-4 px-5 font-mono font-bold text-[#0b3b2c]">{item.id}</td>
+                  <td className="py-4 px-5 font-mono font-bold text-[#012D1D]">{item.id}</td>
                   <td className="py-4 px-5 font-bold text-[#14211d]">{item.customer}</td>
                   <td className="py-4 px-5 font-bold text-gray-800">${item.saleAmount.toFixed(2)}</td>
                   <td className="py-4 px-5 font-semibold text-gray-600">{item.rate}%</td>
-                  <td className="py-4 px-5 font-serif font-bold text-sm text-[#0b3b2c]">
+                  <td className="py-4 px-5 font-serif font-bold text-sm text-[#012D1D]">
                     ${item.commission.toFixed(2)}
                   </td>
                   <td className="py-4 px-5 text-gray-500">{item.date}</td>

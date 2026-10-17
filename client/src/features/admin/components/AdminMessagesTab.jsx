@@ -124,7 +124,7 @@ export default function AdminMessagesTab() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search conversations..."
-                className="w-full rounded-xl border border-gray-200 bg-white py-2 pl-9 pr-3 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 bg-white py-2 pl-9 pr-3 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
             </div>
@@ -141,10 +141,10 @@ export default function AdminMessagesTab() {
                   type="button"
                   onClick={() => setActiveConvId(c.id)}
                   className={`w-full text-left p-4 transition-all cursor-pointer flex items-start gap-3 ${
-                    isSelected ? 'bg-emerald-50/60 border-l-4 border-[#0b3b2c]' : 'hover:bg-gray-50'
+                    isSelected ? 'bg-emerald-50/60 border-l-4 border-[#012D1D]' : 'hover:bg-gray-50'
                   }`}
                 >
-                  <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#0b3b2c] flex items-center justify-center font-extrabold text-xs shrink-0 mt-0.5">
+                  <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#012D1D] flex items-center justify-center font-extrabold text-xs shrink-0 mt-0.5">
                     {c.avatar}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -152,7 +152,7 @@ export default function AdminMessagesTab() {
                       <span className="font-bold text-xs text-[#14211d] truncate">{c.customer}</span>
                       <span className="text-xs text-gray-400 shrink-0">{c.time}</span>
                     </div>
-                    <div className="font-medium text-xs text-[#0b3b2c] truncate">{c.topic}</div>
+                    <div className="font-medium text-xs text-[#012D1D] truncate">{c.topic}</div>
                     <p className="text-xs text-gray-500 truncate mt-0.5">{lastMsg?.text}</p>
                   </div>
                   {c.unread && (
@@ -169,7 +169,7 @@ export default function AdminMessagesTab() {
           {/* Chat Header */}
           <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between bg-[#fcfdfd]">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-[#0b3b2c] text-white flex items-center justify-center font-extrabold text-xs">
+              <div className="h-10 w-10 rounded-full bg-[#012D1D] text-white flex items-center justify-center font-extrabold text-xs">
                 {activeConv.avatar}
               </div>
               <div>
@@ -186,7 +186,7 @@ export default function AdminMessagesTab() {
             <div className="flex items-center gap-2">
               <a
                 href={`tel:${activeConv.phone}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#0b3b2c] font-bold text-xs hover:bg-[#0b3b2c] hover:text-white transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#012D1D] font-bold text-xs hover:bg-[#012D1D] hover:text-white transition-all cursor-pointer"
               >
                 <Phone className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Call Client</span>
@@ -206,7 +206,7 @@ export default function AdminMessagesTab() {
                   <div
                     className={`max-w-[80%] rounded-2xl p-3.5 text-xs shadow-2xs leading-relaxed ${
                       isAdminMsg
-                        ? 'bg-[#0b3b2c] text-white rounded-br-xs'
+                        ? 'bg-[#012D1D] text-white rounded-br-xs'
                         : 'bg-white text-[#14211d] border border-gray-100 rounded-bl-xs'
                     }`}
                   >
@@ -229,7 +229,7 @@ export default function AdminMessagesTab() {
                     'Yes! We have size 42 in stock and our warehouse can dispatch it today.'
                   )
                 }
-                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#0b3b2c] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
+                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#012D1D] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
               >
                 Available in Stock
               </button>
@@ -240,7 +240,7 @@ export default function AdminMessagesTab() {
                     'Your order is packed and will be picked up by the courier this afternoon.'
                   )
                 }
-                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#0b3b2c] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
+                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#012D1D] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
               >
                 Courier Pick Up
               </button>
@@ -251,7 +251,7 @@ export default function AdminMessagesTab() {
                     'We have approved your size exchange request. A return label is being generated.'
                   )
                 }
-                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#0b3b2c] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
+                className="px-2.5 py-1 min-h-[44px] rounded-lg bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#012D1D] text-xs font-semibold whitespace-nowrap cursor-pointer transition-colors"
               >
                 Exchange Approved
               </button>
@@ -263,11 +263,11 @@ export default function AdminMessagesTab() {
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Type your response to the customer..."
-                className="flex-1 rounded-xl border border-gray-200 py-2.5 px-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+                className="flex-1 rounded-xl border border-gray-200 py-2.5 px-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
               />
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#0b3b2c] text-white px-5 py-2.5 min-h-[44px] text-xs font-bold hover:bg-[#124e3b] transition-all cursor-pointer shadow-md shrink-0"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#012D1D] text-white px-5 py-2.5 min-h-[44px] text-xs font-bold hover:bg-[#124e3b] transition-all cursor-pointer shadow-md shrink-0"
               >
                 <Send className="h-3.5 w-3.5" />
                 <span>Send</span>

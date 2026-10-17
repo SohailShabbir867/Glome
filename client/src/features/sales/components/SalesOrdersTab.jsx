@@ -144,7 +144,7 @@ export default function SalesOrdersTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -201,7 +201,7 @@ export default function SalesOrdersTab() {
         </div>
 
         <div className="p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100 flex items-center gap-3">
-          <div className="h-8 w-8 rounded-xl bg-[#0b3b2c] text-white flex items-center justify-center font-bold text-xs">
+          <div className="h-8 w-8 rounded-xl bg-[#012D1D] text-white flex items-center justify-center font-bold text-xs">
             4
           </div>
           <div>
@@ -221,7 +221,7 @@ export default function SalesOrdersTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by order ID, customer name, product, or phone..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -234,7 +234,7 @@ export default function SalesOrdersTab() {
               onClick={() => setStatusFilter(status)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 statusFilter === status
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -262,7 +262,7 @@ export default function SalesOrdersTab() {
             <tbody className="divide-y divide-gray-100">
               {filteredOrders.map((ord) => (
                 <tr key={ord.id} className="hover:bg-gray-50/70 transition-colors">
-                  <td className="py-4 px-5 font-mono font-bold text-[#0b3b2c]">
+                  <td className="py-4 px-5 font-mono font-bold text-[#012D1D]">
                     <button
                       type="button"
                       onClick={() => setSelectedOrder(ord)}
@@ -345,7 +345,7 @@ export default function SalesOrdersTab() {
                         <button
                           type="button"
                           onClick={() => handleAdvanceStatus(ord.id, 'Delivered')}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white text-xs font-bold hover:bg-[#124e3b] shadow-sm transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white text-xs font-bold hover:bg-[#124e3b] shadow-sm transition-all cursor-pointer"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5" />
                           <span>Mark Delivered</span>
@@ -425,7 +425,7 @@ export default function SalesOrdersTab() {
                   <div>
                     <h4 className="font-bold text-sm text-[#14211d]">{selectedOrder.product}</h4>
                     <p className="text-xs text-gray-500">{selectedOrder.variant}</p>
-                    <div className="font-bold text-xs text-[#0b3b2c] mt-0.5">
+                    <div className="font-bold text-xs text-[#012D1D] mt-0.5">
                       ${selectedOrder.amount.toFixed(2)} • {selectedOrder.payment}
                     </div>
                   </div>
@@ -437,7 +437,7 @@ export default function SalesOrdersTab() {
                     <span className="font-bold text-gray-800">{selectedOrder.customer}</span>
                     <a
                       href={`tel:${selectedOrder.phone}`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 min-h-[44px] rounded-lg bg-emerald-50 text-[#0b3b2c] font-bold hover:bg-emerald-100"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 min-h-[44px] rounded-lg bg-emerald-50 text-[#012D1D] font-bold hover:bg-emerald-100"
                     >
                       <Phone className="h-3.5 w-3.5" />
                       <span>Call Client</span>
@@ -456,7 +456,7 @@ export default function SalesOrdersTab() {
 
                 {/* Workflow Action Bar inside Modal */}
                 <div className="p-4 rounded-2xl bg-[#f8faf9] border border-emerald-100 space-y-2">
-                  <span className="font-bold text-[#0b3b2c] block">Order State Machine:</span>
+                  <span className="font-bold text-[#012D1D] block">Order State Machine:</span>
                   <div className="flex flex-wrap gap-2">
                     {['Confirmed', 'Packing', 'Dispatched', 'Delivered'].map((step) => (
                       <button
@@ -465,7 +465,7 @@ export default function SalesOrdersTab() {
                         onClick={() => handleAdvanceStatus(selectedOrder.id, step)}
                         className={`px-3 py-1.5 min-h-[44px] rounded-xl font-bold text-xs cursor-pointer transition-all ${
                           selectedOrder.status === step
-                            ? 'bg-[#0b3b2c] text-white shadow-xs'
+                            ? 'bg-[#012D1D] text-white shadow-xs'
                             : 'bg-white border border-gray-200 text-gray-700 hover:bg-emerald-50'
                         }`}
                       >
@@ -480,7 +480,7 @@ export default function SalesOrdersTab() {
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold hover:bg-[#124e3b]"
+                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold hover:bg-[#124e3b]"
                 >
                   Done
                 </button>

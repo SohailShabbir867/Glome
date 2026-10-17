@@ -122,7 +122,7 @@ export default function SalesExchangesTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -156,7 +156,7 @@ export default function SalesExchangesTab() {
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             Approved & Dispatched
           </span>
-          <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">
+          <div className="font-serif text-2xl font-extrabold text-[#012D1D]">
             {exchanges.filter((e) => e.status === 'Approved & Dispatched').length} Exchanges
           </div>
           <p className="text-xs text-emerald-600 font-semibold">Replacements sent with courier</p>
@@ -182,7 +182,7 @@ export default function SalesExchangesTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by ticket #, order ID, customer, or product..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -195,7 +195,7 @@ export default function SalesExchangesTab() {
               onClick={() => setFilterStatus(st)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterStatus === st
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -214,7 +214,7 @@ export default function SalesExchangesTab() {
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
               <div className="flex items-center gap-3">
-                <span className="font-mono font-bold text-xs text-[#0b3b2c] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
+                <span className="font-mono font-bold text-xs text-[#012D1D] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
                   {ex.id}
                 </span>
                 <span className="text-xs text-gray-400 font-mono">Order {ex.orderId}</span>
@@ -234,7 +234,7 @@ export default function SalesExchangesTab() {
               <div className="flex items-center gap-2">
                 <a
                   href={`tel:${ex.phone}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#0b3b2c] text-xs font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-emerald-50 text-gray-700 hover:text-[#012D1D] text-xs font-bold transition-colors"
                 >
                   <Phone className="h-3.5 w-3.5 text-emerald-600" />
                   <span>Call {ex.customer}</span>
@@ -265,12 +265,12 @@ export default function SalesExchangesTab() {
                     {ex.fromVariant}
                   </span>
                 </div>
-                <ArrowRight className="h-4 w-4 text-[#0b3b2c] shrink-0" />
+                <ArrowRight className="h-4 w-4 text-[#012D1D] shrink-0" />
                 <div className="flex-1">
                   <span className="text-xs text-emerald-700 block font-semibold">
                     Requested Replacement:
                   </span>
-                  <span className="text-xs font-bold text-[#0b3b2c]">{ex.toVariant}</span>
+                  <span className="text-xs font-bold text-[#012D1D]">{ex.toVariant}</span>
                 </div>
               </div>
 
@@ -280,7 +280,7 @@ export default function SalesExchangesTab() {
                   <span className="text-xs text-gray-500 block font-semibold">
                     Live Stock Check
                   </span>
-                  <span className="text-xs font-bold text-[#0b3b2c]">
+                  <span className="text-xs font-bold text-[#012D1D]">
                     {ex.availableStockInSize} units in stock
                   </span>
                 </div>
@@ -308,7 +308,7 @@ export default function SalesExchangesTab() {
                 <button
                   type="button"
                   onClick={() => handleApprove(ex.id, ex.product, ex.toVariant)}
-                  className="inline-flex items-center gap-2 px-5 py-2 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold text-xs hover:bg-[#124e3b] shadow-md cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-2 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold text-xs hover:bg-[#124e3b] shadow-md cursor-pointer"
                 >
                   <Check className="h-4 w-4" />
                   <span>Approve & Dispatch Replacement</span>

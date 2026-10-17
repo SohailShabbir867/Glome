@@ -41,7 +41,7 @@ export default function AdminSettingsTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -61,7 +61,7 @@ export default function AdminSettingsTab() {
         {/* Store Profile Card */}
         <div className="rounded-3xl bg-white p-6 sm:p-8 border border-gray-100 shadow-2xs space-y-4">
           <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
-            <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#0b3b2c] flex items-center justify-center">
+            <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#012D1D] flex items-center justify-center">
               <Store className="h-5 w-5" />
             </div>
             <div>
@@ -77,7 +77,7 @@ export default function AdminSettingsTab() {
                 type="text"
                 value={storeName}
                 onChange={(e) => setStoreName(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div>
@@ -86,7 +86,7 @@ export default function AdminSettingsTab() {
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div>
@@ -95,7 +95,7 @@ export default function AdminSettingsTab() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div>
@@ -104,7 +104,7 @@ export default function AdminSettingsTab() {
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div className="sm:col-span-2">
@@ -113,7 +113,7 @@ export default function AdminSettingsTab() {
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function AdminSettingsTab() {
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] bg-white focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] bg-white focus:border-[#012D1D] focus:outline-none"
               >
                 <option value="USD ($)">USD ($)</option>
                 <option value="PKR (₨)">PKR (₨)</option>
@@ -152,7 +152,7 @@ export default function AdminSettingsTab() {
                 step="0.1"
                 value={taxRate}
                 onChange={(e) => setTaxRate(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div>
@@ -162,7 +162,7 @@ export default function AdminSettingsTab() {
                 step="1"
                 value={freeShippingThreshold}
                 onChange={(e) => setFreeShippingThreshold(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
             <div>
@@ -171,7 +171,7 @@ export default function AdminSettingsTab() {
                 type="number"
                 value={lowStockAlert}
                 onChange={(e) => setLowStockAlert(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 py-2.5 px-3.5 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
               />
             </div>
           </div>
@@ -199,7 +199,7 @@ export default function AdminSettingsTab() {
                 type="checkbox"
                 checked={emailAlerts}
                 onChange={(e) => setEmailAlerts(e.target.checked)}
-                className="h-5 w-5 rounded text-[#0b3b2c] focus:ring-[#0b3b2c]"
+                className="h-5 w-5 rounded text-[#012D1D] focus:ring-[#012D1D]"
               />
             </label>
 
@@ -212,7 +212,7 @@ export default function AdminSettingsTab() {
                 type="checkbox"
                 checked={smsAlerts}
                 onChange={(e) => setSmsAlerts(e.target.checked)}
-                className="h-5 w-5 rounded text-[#0b3b2c] focus:ring-[#0b3b2c]"
+                className="h-5 w-5 rounded text-[#012D1D] focus:ring-[#012D1D]"
               />
             </label>
           </div>
@@ -222,7 +222,7 @@ export default function AdminSettingsTab() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#0b3b2c] text-white px-7 py-3 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#012D1D] text-white px-7 py-3 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer"
           >
             <Save className="h-4 w-4" />
             <span>Save All Settings</span>

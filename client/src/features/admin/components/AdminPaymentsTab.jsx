@@ -119,7 +119,7 @@ export default function AdminPaymentsTab() {
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             Total Settled Online
           </span>
-          <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">
+          <div className="font-serif text-2xl font-extrabold text-[#012D1D]">
             ${totalSettled.toFixed(2)}
           </div>
           <p className="text-xs text-emerald-600 font-semibold">Directly deposited to merchant account</p>
@@ -152,7 +152,7 @@ export default function AdminPaymentsTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by transaction ID, order #, or customer..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -166,7 +166,7 @@ export default function AdminPaymentsTab() {
               onClick={() => setGatewayFilter(gw)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 gatewayFilter === gw
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -195,7 +195,7 @@ export default function AdminPaymentsTab() {
             <tbody className="divide-y divide-gray-100">
               {filteredTransactions.map((txn) => (
                 <tr key={txn.id} className="hover:bg-gray-50/70 transition-colors">
-                  <td className="py-4 px-5 font-mono font-bold text-[#0b3b2c]">{txn.id}</td>
+                  <td className="py-4 px-5 font-mono font-bold text-[#012D1D]">{txn.id}</td>
                   <td className="py-4 px-5 font-mono text-gray-700">{txn.orderId}</td>
                   <td className="py-4 px-5 font-bold text-[#14211d]">{txn.customer}</td>
                   <td className="py-4 px-5 text-gray-600">{txn.gateway}</td>
@@ -216,7 +216,7 @@ export default function AdminPaymentsTab() {
                     <button
                       type="button"
                       onClick={() => setSelectedTxn(txn)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#0b3b2c] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#012D1D] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
                     >
                       <Eye className="h-3.5 w-3.5" />
                       <span>Receipt</span>
@@ -248,7 +248,7 @@ export default function AdminPaymentsTab() {
             >
               <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#0b3b2c] flex items-center justify-center">
+                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#012D1D] flex items-center justify-center">
                     <FileCheck className="h-5 w-5" />
                   </div>
                   <div>
@@ -297,8 +297,8 @@ export default function AdminPaymentsTab() {
                     <span className="text-rose-600 font-medium">-${selectedTxn.fee.toFixed(2)}</span>
                   </div>
                   <div className="pt-2 border-t border-emerald-200/60 flex justify-between items-center">
-                    <span className="font-bold text-[#0b3b2c]">Net Settlement:</span>
-                    <span className="font-serif text-lg font-extrabold text-[#0b3b2c]">
+                    <span className="font-bold text-[#012D1D]">Net Settlement:</span>
+                    <span className="font-serif text-lg font-extrabold text-[#012D1D]">
                       ${selectedTxn.net.toFixed(2)}
                     </span>
                   </div>
@@ -309,7 +309,7 @@ export default function AdminPaymentsTab() {
                 <button
                   type="button"
                   onClick={() => setSelectedTxn(null)}
-                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold hover:bg-[#124e3b]"
+                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold hover:bg-[#124e3b]"
                 >
                   Close Receipt
                 </button>

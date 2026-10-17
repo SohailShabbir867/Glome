@@ -146,7 +146,7 @@ export default function AdminCustomersTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by customer name, email, phone or city..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -160,7 +160,7 @@ export default function AdminCustomersTab() {
               onClick={() => setFilterTag(tag)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterTag === tag
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -190,7 +190,7 @@ export default function AdminCustomersTab() {
                 <tr key={cust.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-4 px-5">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#0b3b2c] flex items-center justify-center font-extrabold text-xs shrink-0">
+                      <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#012D1D] flex items-center justify-center font-extrabold text-xs shrink-0">
                         {cust.avatar}
                       </div>
                       <div>
@@ -209,7 +209,7 @@ export default function AdminCustomersTab() {
                       {cust.totalOrders} orders
                     </span>
                   </td>
-                  <td className="py-4 px-5 font-bold text-[#0b3b2c]">
+                  <td className="py-4 px-5 font-bold text-[#012D1D]">
                     ${cust.totalSpent.toFixed(2)}
                   </td>
                   <td className="py-4 px-5">
@@ -229,7 +229,7 @@ export default function AdminCustomersTab() {
                     <button
                       type="button"
                       onClick={() => setSelectedCustomer(cust)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#0b3b2c] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#012D1D] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
                     >
                       <Eye className="h-3.5 w-3.5" />
                       <span>View</span>
@@ -261,7 +261,7 @@ export default function AdminCustomersTab() {
             >
               <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-full bg-emerald-100 text-[#0b3b2c] flex items-center justify-center font-extrabold text-sm">
+                  <div className="h-12 w-12 rounded-full bg-emerald-100 text-[#012D1D] flex items-center justify-center font-extrabold text-sm">
                     {selectedCustomer.avatar}
                   </div>
                   <div>
@@ -285,15 +285,15 @@ export default function AdminCustomersTab() {
               <div className="space-y-3.5 my-5 text-xs">
                 <div className="p-3.5 rounded-2xl bg-gray-50 border border-gray-100 space-y-2">
                   <div className="flex items-center gap-2 text-gray-600">
-                    <Mail className="h-4 w-4 text-[#0b3b2c]" />
+                    <Mail className="h-4 w-4 text-[#012D1D]" />
                     <span>{selectedCustomer.email}</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
-                    <Phone className="h-4 w-4 text-[#0b3b2c]" />
+                    <Phone className="h-4 w-4 text-[#012D1D]" />
                     <span>{selectedCustomer.phone}</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
-                    <MapPin className="h-4 w-4 text-[#0b3b2c]" />
+                    <MapPin className="h-4 w-4 text-[#012D1D]" />
                     <span>{selectedCustomer.city}, Pakistan</span>
                   </div>
                 </div>
@@ -301,13 +301,13 @@ export default function AdminCustomersTab() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-100">
                     <span className="text-gray-500 block">Total Completed Orders</span>
-                    <span className="font-serif text-xl font-bold text-[#0b3b2c]">
+                    <span className="font-serif text-xl font-bold text-[#012D1D]">
                       {selectedCustomer.totalOrders}
                     </span>
                   </div>
                   <div className="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-100">
                     <span className="text-gray-500 block">Lifetime Purchases</span>
-                    <span className="font-serif text-xl font-bold text-[#0b3b2c]">
+                    <span className="font-serif text-xl font-bold text-[#012D1D]">
                       ${selectedCustomer.totalSpent.toFixed(2)}
                     </span>
                   </div>
@@ -318,7 +318,7 @@ export default function AdminCustomersTab() {
                 <button
                   type="button"
                   onClick={() => setSelectedCustomer(null)}
-                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold hover:bg-[#124e3b]"
+                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold hover:bg-[#124e3b]"
                 >
                   Close
                 </button>

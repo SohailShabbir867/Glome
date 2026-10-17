@@ -80,7 +80,7 @@ export default function SalesCustomersTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by client name, city, or phone..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -96,7 +96,7 @@ export default function SalesCustomersTab() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#0b3b2c] flex items-center justify-center font-extrabold text-xs">
+                  <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#012D1D] flex items-center justify-center font-extrabold text-xs">
                     {client.avatar}
                   </div>
                   <div>
@@ -107,7 +107,7 @@ export default function SalesCustomersTab() {
 
                 <a
                   href={`tel:${client.phone}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#0b3b2c] font-bold text-xs hover:bg-emerald-100 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#012D1D] font-bold text-xs hover:bg-emerald-100 transition-colors"
                 >
                   <Phone className="h-3.5 w-3.5" />
                   <span>Call</span>
@@ -121,7 +121,7 @@ export default function SalesCustomersTab() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500 font-semibold">Total Orders:</span>
-                  <span className="font-bold text-[#0b3b2c]">{client.orders} orders</span>
+                  <span className="font-bold text-[#012D1D]">{client.orders} orders</span>
                 </div>
               </div>
 

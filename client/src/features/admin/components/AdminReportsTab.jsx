@@ -16,7 +16,7 @@ export default function AdminReportsTab() {
   };
 
   const categoryBreakdown = [
-    { name: 'Luxury Footwear & Shoes', revenue: 24150.00, percent: 50, color: 'bg-[#0b3b2c]' },
+    { name: 'Luxury Footwear & Shoes', revenue: 24150.00, percent: 50, color: 'bg-[#012D1D]' },
     { name: "Men's Fashion & Outerwear", revenue: 14200.00, percent: 30, color: 'bg-emerald-600' },
     { name: "Women's Designer Wear", revenue: 6800.00, percent: 14, color: 'bg-teal-500' },
     { name: 'Leather Accessories & Caps', revenue: 3100.00, percent: 6, color: 'bg-amber-500' },
@@ -38,7 +38,7 @@ export default function AdminReportsTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -61,7 +61,7 @@ export default function AdminReportsTab() {
           <select
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 min-h-[44px] text-xs font-bold text-gray-700 shadow-2xs focus:border-[#0b3b2c] focus:outline-none"
+            className="rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 min-h-[44px] text-xs font-bold text-gray-700 shadow-2xs focus:border-[#012D1D] focus:outline-none"
           >
             <option value="October 2026">October 2026</option>
             <option value="Q3 2026">Q3 2026 (Jul - Sep)</option>
@@ -71,7 +71,7 @@ export default function AdminReportsTab() {
           <button
             type="button"
             onClick={() => showToast(`Report for ${period} exported successfully as PDF.`)}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#0b3b2c] text-white px-4 py-2.5 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#012D1D] text-white px-4 py-2.5 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer"
           >
             <Download className="h-4 w-4" />
             <span>Export Report</span>
@@ -104,7 +104,7 @@ export default function AdminReportsTab() {
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             Net Sales Settled
           </span>
-          <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">$44,830.00</div>
+          <div className="font-serif text-2xl font-extrabold text-[#012D1D]">$44,830.00</div>
           <p className="text-xs text-emerald-700 font-medium">92.9% gross conversion margin</p>
         </div>
 
@@ -165,7 +165,7 @@ export default function AdminReportsTab() {
                   <div className="text-gray-400">{region.orders} orders completed</div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-[#0b3b2c]">
+                  <div className="font-bold text-[#012D1D]">
                     ${region.revenue.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </div>
                   <div className="text-gray-500 font-medium">{region.share} market share</div>

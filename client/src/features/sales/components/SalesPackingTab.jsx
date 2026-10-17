@@ -76,7 +76,7 @@ export default function SalesPackingTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -102,7 +102,7 @@ export default function SalesPackingTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search order ID or customer..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -117,7 +117,7 @@ export default function SalesPackingTab() {
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
               <div className="flex items-center gap-3">
-                <span className="font-mono font-bold text-xs text-[#0b3b2c] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
+                <span className="font-mono font-bold text-xs text-[#012D1D] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
                   {item.id}
                 </span>
                 <span className="font-bold text-xs text-[#14211d]">{item.customer}</span>
@@ -137,7 +137,7 @@ export default function SalesPackingTab() {
                 onClick={() => showToast(`Printing packing slip for ${item.id}...`)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-bold transition-colors cursor-pointer self-start sm:self-auto"
               >
-                <Printer className="h-3.5 w-3.5 text-[#0b3b2c]" />
+                <Printer className="h-3.5 w-3.5 text-[#012D1D]" />
                 <span>Print Slip & Barcode</span>
               </button>
             </div>

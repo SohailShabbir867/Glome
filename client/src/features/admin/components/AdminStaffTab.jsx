@@ -126,7 +126,7 @@ export default function AdminStaffTab() {
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
             Total Commission Paid
           </span>
-          <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">
+          <div className="font-serif text-2xl font-extrabold text-[#012D1D]">
             ${totalCommission.toFixed(2)}
           </div>
           <p className="text-xs text-gray-400">At standard 5% sales incentive</p>
@@ -149,7 +149,7 @@ export default function AdminStaffTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by salesman name, region, or email..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -176,7 +176,7 @@ export default function AdminStaffTab() {
                 <tr key={member.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-4 px-5">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#0b3b2c] flex items-center justify-center font-extrabold text-xs shrink-0">
+                      <div className="h-10 w-10 rounded-full bg-emerald-100 text-[#012D1D] flex items-center justify-center font-extrabold text-xs shrink-0">
                         {member.avatar}
                       </div>
                       <div>

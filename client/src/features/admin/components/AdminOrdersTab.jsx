@@ -157,7 +157,7 @@ export default function AdminOrdersTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -179,7 +179,7 @@ export default function AdminOrdersTab() {
             onClick={() => showToast('Orders list exported as orders-oct-2026.csv')}
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 px-4 py-2.5 min-h-[44px] text-xs font-bold text-gray-700 shadow-2xs transition-colors cursor-pointer"
           >
-            <Download className="h-4 w-4 text-[#0b3b2c]" />
+            <Download className="h-4 w-4 text-[#012D1D]" />
             <span>Export CSV</span>
           </button>
         </div>
@@ -219,7 +219,7 @@ export default function AdminOrdersTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by order ID, customer name or phone..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -233,7 +233,7 @@ export default function AdminOrdersTab() {
               onClick={() => setStatusFilter(status)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 statusFilter === status
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -269,7 +269,7 @@ export default function AdminOrdersTab() {
               ) : (
                 filteredOrders.map((ord) => (
                   <tr key={ord.id} className="hover:bg-gray-50/70 transition-colors">
-                    <td className="py-4 px-5 font-bold text-[#0b3b2c] font-mono">{ord.id}</td>
+                    <td className="py-4 px-5 font-bold text-[#012D1D] font-mono">{ord.id}</td>
                     <td className="py-4 px-5">
                       <div className="font-bold text-[#14211d]">{ord.customer}</div>
                       <div className="text-gray-400 text-xs">{ord.phone}</div>
@@ -292,7 +292,7 @@ export default function AdminOrdersTab() {
                         <button
                           type="button"
                           onClick={() => setSelectedOrder(ord)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#0b3b2c] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-xl bg-gray-100 hover:bg-[#012D1D] hover:text-white text-gray-700 font-bold transition-all cursor-pointer"
                         >
                           <Eye className="h-3.5 w-3.5" />
                           <span>View Details</span>
@@ -347,7 +347,7 @@ export default function AdminOrdersTab() {
 
               {/* Status Update Quick Bar */}
               <div className="my-5 p-4 rounded-2xl bg-[#f8faf9] border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <span className="text-xs font-bold text-[#0b3b2c]">Update Order Status:</span>
+                <span className="text-xs font-bold text-[#012D1D]">Update Order Status:</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {['Pending', 'Processing', 'Shipped', 'Delivered'].map((st) => (
                     <button
@@ -356,7 +356,7 @@ export default function AdminOrdersTab() {
                       onClick={() => handleStatusChange(selectedOrder.id, st)}
                       className={`px-3 py-1.5 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         selectedOrder.status === st
-                          ? 'bg-[#0b3b2c] text-white shadow-xs'
+                          ? 'bg-[#012D1D] text-white shadow-xs'
                           : 'bg-white border border-gray-200 text-gray-600 hover:bg-emerald-50'
                       }`}
                     >
@@ -370,7 +370,7 @@ export default function AdminOrdersTab() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
                 <div className="p-4 rounded-2xl border border-gray-100 bg-gray-50/50 space-y-2">
                   <div className="flex items-center gap-2 text-xs font-bold text-gray-700">
-                    <User className="h-4 w-4 text-[#0b3b2c]" />
+                    <User className="h-4 w-4 text-[#012D1D]" />
                     <span>Customer Information</span>
                   </div>
                   <div className="font-bold text-[#14211d] text-xs">{selectedOrder.customer}</div>
@@ -383,12 +383,12 @@ export default function AdminOrdersTab() {
 
                 <div className="p-4 rounded-2xl border border-gray-100 bg-gray-50/50 space-y-2">
                   <div className="flex items-center gap-2 text-xs font-bold text-gray-700">
-                    <MapPin className="h-4 w-4 text-[#0b3b2c]" />
+                    <MapPin className="h-4 w-4 text-[#012D1D]" />
                     <span>Delivery Address</span>
                   </div>
                   <p className="text-xs text-gray-600 leading-relaxed">{selectedOrder.address}</p>
                   <div className="flex items-center gap-1.5 text-xs text-gray-500 pt-1">
-                    <CreditCard className="h-3.5 w-3.5 text-[#0b3b2c]" />
+                    <CreditCard className="h-3.5 w-3.5 text-[#012D1D]" />
                     <span>{selectedOrder.payment}</span>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ export default function AdminOrdersTab() {
               {/* Items List */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-700">
-                  <ShoppingBag className="h-4 w-4 text-[#0b3b2c]" />
+                  <ShoppingBag className="h-4 w-4 text-[#012D1D]" />
                   <span>Purchased Items ({selectedOrder.items.length})</span>
                 </div>
                 <div className="divide-y divide-gray-100 border border-gray-100 rounded-2xl overflow-hidden">
@@ -429,14 +429,14 @@ export default function AdminOrdersTab() {
               <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
                 <div>
                   <span className="text-xs text-gray-500">Total Invoice Amount:</span>
-                  <div className="font-serif text-2xl font-extrabold text-[#0b3b2c]">
+                  <div className="font-serif text-2xl font-extrabold text-[#012D1D]">
                     ${selectedOrder.amount.toFixed(2)}
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white text-xs font-bold hover:bg-[#124e3b] transition-all cursor-pointer"
+                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white text-xs font-bold hover:bg-[#124e3b] transition-all cursor-pointer"
                 >
                   Done
                 </button>

@@ -157,7 +157,7 @@ export default function AdminInventoryTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -231,7 +231,7 @@ export default function AdminInventoryTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search SKU, item name, or aisle location..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:bg-white focus:outline-none transition-all"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -245,7 +245,7 @@ export default function AdminInventoryTab() {
               onClick={() => setFilterMode(mode)}
               className={`px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterMode === mode
-                  ? 'bg-[#0b3b2c] text-white shadow-xs'
+                  ? 'bg-[#012D1D] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -315,7 +315,7 @@ export default function AdminInventoryTab() {
                       <button
                         type="button"
                         onClick={() => setRestockModalItem(item)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#0b3b2c] font-bold hover:bg-[#0b3b2c] hover:text-white transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 min-h-[44px] rounded-xl bg-emerald-50 text-[#012D1D] font-bold hover:bg-[#012D1D] hover:text-white transition-all cursor-pointer"
                       >
                         <Plus className="h-3.5 w-3.5" />
                         <span>Restock</span>
@@ -348,7 +348,7 @@ export default function AdminInventoryTab() {
             >
               <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#0b3b2c] flex items-center justify-center">
+                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#012D1D] flex items-center justify-center">
                     <Layers className="h-5 w-5" />
                   </div>
                   <div>
@@ -387,7 +387,7 @@ export default function AdminInventoryTab() {
                         onClick={() => setRestockQty(amt)}
                         className={`py-2 min-h-[44px] rounded-xl font-bold border transition-all cursor-pointer ${
                           restockQty === amt
-                            ? 'bg-[#0b3b2c] text-white border-[#0b3b2c]'
+                            ? 'bg-[#012D1D] text-white border-[#012D1D]'
                             : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
                         }`}
                       >
@@ -402,7 +402,7 @@ export default function AdminInventoryTab() {
                     value={restockQty}
                     onChange={(e) => setRestockQty(parseInt(e.target.value) || 0)}
                     placeholder="Or enter custom units"
-                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                   />
                 </div>
 
@@ -416,7 +416,7 @@ export default function AdminInventoryTab() {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold hover:bg-[#124e3b] shadow-md"
+                    className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold hover:bg-[#124e3b] shadow-md"
                   >
                     Confirm Restock
                   </button>

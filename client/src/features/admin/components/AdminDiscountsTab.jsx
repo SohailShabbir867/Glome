@@ -145,7 +145,7 @@ export default function AdminDiscountsTab() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#0b3b2c] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
+            className="fixed top-6 right-6 z-50 rounded-2xl bg-[#012D1D] text-white px-5 py-3 shadow-xl text-xs font-bold flex items-center gap-2"
           >
             <CheckCircle2 className="h-4 w-4 text-emerald-300" />
             <span>{toastMsg}</span>
@@ -167,7 +167,7 @@ export default function AdminDiscountsTab() {
         <button
           type="button"
           onClick={() => setShowCreateModal(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-[#0b3b2c] text-white px-5 py-2.5 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer self-start sm:self-auto"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#012D1D] text-white px-5 py-2.5 min-h-[44px] text-xs font-bold shadow-md hover:bg-[#124e3b] transition-all cursor-pointer self-start sm:self-auto"
         >
           <Plus className="h-4 w-4" />
           <span>Create Coupon</span>
@@ -182,7 +182,7 @@ export default function AdminDiscountsTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search promo code or campaign..."
-            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:outline-none"
+            className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2.5 pl-10 pr-4 min-h-[44px] text-xs text-[#14211d] placeholder-gray-400 focus:border-[#012D1D] focus:outline-none"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
@@ -208,8 +208,8 @@ export default function AdminDiscountsTab() {
                 <tr key={coupon.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-4 px-5">
                     <div className="flex items-center gap-2">
-                      <Tag className="h-4 w-4 text-[#0b3b2c]" />
-                      <span className="font-mono font-bold text-sm text-[#0b3b2c] bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">
+                      <Tag className="h-4 w-4 text-[#012D1D]" />
+                      <span className="font-mono font-bold text-sm text-[#012D1D] bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">
                         {coupon.code}
                       </span>
                     </div>
@@ -278,7 +278,7 @@ export default function AdminDiscountsTab() {
             >
               <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#0b3b2c] flex items-center justify-center">
+                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-[#012D1D] flex items-center justify-center">
                     <Tag className="h-5 w-5" />
                   </div>
                   <div>
@@ -306,7 +306,7 @@ export default function AdminDiscountsTab() {
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     placeholder="e.g. FLASH25"
-                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] font-mono font-bold focus:border-[#0b3b2c] focus:outline-none"
+                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] font-mono font-bold focus:border-[#012D1D] focus:outline-none"
                   />
                 </div>
 
@@ -316,7 +316,7 @@ export default function AdminDiscountsTab() {
                     <select
                       value={type}
                       onChange={(e) => setType(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] bg-white focus:border-[#0b3b2c] focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] bg-white focus:border-[#012D1D] focus:outline-none"
                     >
                       <option value="Percentage">Percentage (%)</option>
                       <option value="Fixed Amount">Fixed Amount ($)</option>
@@ -333,7 +333,7 @@ export default function AdminDiscountsTab() {
                       value={value}
                       onChange={(e) => setValue(e.target.value)}
                       placeholder={type === 'Percentage' ? '20' : '15'}
-                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -346,7 +346,7 @@ export default function AdminDiscountsTab() {
                       value={minSpend}
                       onChange={(e) => setMinSpend(e.target.value)}
                       placeholder="50"
-                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -356,7 +356,7 @@ export default function AdminDiscountsTab() {
                       value={maxUses}
                       onChange={(e) => setMaxUses(e.target.value)}
                       placeholder="500"
-                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -366,7 +366,7 @@ export default function AdminDiscountsTab() {
                       value={expiry}
                       onChange={(e) => setExpiry(e.target.value)}
                       placeholder="Dec 31, 2026"
-                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -378,7 +378,7 @@ export default function AdminDiscountsTab() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="e.g. 25% off flash sale on footwear"
-                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#0b3b2c] focus:outline-none"
+                    className="w-full rounded-xl border border-gray-200 py-2.5 px-3 min-h-[44px] focus:border-[#012D1D] focus:outline-none"
                   />
                 </div>
 
@@ -392,7 +392,7 @@ export default function AdminDiscountsTab() {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#0b3b2c] text-white font-bold hover:bg-[#124e3b] shadow-md"
+                    className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#012D1D] text-white font-bold hover:bg-[#124e3b] shadow-md"
                   >
                     Save Coupon
                   </button>
