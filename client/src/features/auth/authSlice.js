@@ -114,6 +114,24 @@ export const INITIAL_STAFF_MEMBERS = [
     avatar: 'BT',
     permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.ADMIN]],
   },
+  {
+    id: 'usr-sec-1',
+    name: 'Tariq Mehmood',
+    role: ROLES.SECURITY,
+    title: 'Chief Security Officer',
+    email: 'security@glomemall.com',
+    phone: '+92 300 9988112',
+    territory: 'Mall Perimeter & Central Vault',
+    orders: 0,
+    sales: 0.0,
+    commissionRate: 0,
+    commissionEarned: 0.0,
+    convRate: 'N/A',
+    rating: '5.0',
+    status: 'Active',
+    avatar: 'TM',
+    permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.SECURITY]],
+  },
 ];
 
 const loadInitialStaffList = () => {
@@ -196,6 +214,25 @@ const authSlice = createSlice({
           role: leadSales.role,
           title: leadSales.title,
           permissions: leadSales.permissions || DEFAULT_ROLE_PERMISSIONS[ROLES.SALES],
+        };
+      } else if (payload === 'security') {
+        const secStaff =
+          state.staffList.find((s) => s.id === 'usr-sec-1') ||
+          INITIAL_STAFF_MEMBERS.find((s) => s.role === ROLES.SECURITY) || {
+            id: 'usr-sec-1',
+            name: 'Tariq Mehmood',
+            email: 'security@glomemall.com',
+            role: ROLES.SECURITY,
+            title: 'Chief Security Officer',
+            permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.SECURITY]],
+          };
+        state.user = {
+          id: secStaff.id,
+          name: secStaff.name,
+          email: secStaff.email,
+          role: secStaff.role,
+          title: secStaff.title,
+          permissions: secStaff.permissions || DEFAULT_ROLE_PERMISSIONS[ROLES.SECURITY],
         };
       } else {
         state.user = {

@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
+  Camera,
 } from 'lucide-react';
 import { setCredentials } from '@/features/auth/authSlice';
 import { ROLES, DEFAULT_ROLE_PERMISSIONS } from '@/constants/roles';
@@ -57,6 +58,21 @@ export default function LoginPage() {
         })
       );
       navigate('/sales');
+    } else if (role === 'security') {
+      dispatch(
+        setCredentials({
+          user: {
+            id: 'usr-sec-1',
+            name: 'Tariq Mehmood',
+            email: 'security@glomemall.com',
+            role: ROLES.SECURITY,
+            title: 'Chief Security Officer',
+            permissions: [...DEFAULT_ROLE_PERMISSIONS[ROLES.SECURITY]],
+          },
+          accessToken: 'mock-security-token-' + Date.now(),
+        })
+      );
+      navigate('/security');
     } else {
       dispatch(
         setCredentials({
@@ -93,9 +109,12 @@ export default function LoginPage() {
       const isSuperAdminLogin = lower.includes('super') || lower === 'sohail@glome.com';
       const isAdminLogin = lower.includes('admin');
       const isSalesLogin = lower.includes('sales') || lower === 'ali.raza@glome.com';
+      const isSecurityLogin = lower.includes('security') || lower.includes('cctv') || lower === 'security@glomemall.com';
 
       const assignedRole = isSuperAdminLogin
         ? ROLES.SUPER_ADMIN
+        : isSecurityLogin
+        ? ROLES.SECURITY
         : isAdminLogin
         ? ROLES.ADMIN
         : isSalesLogin
@@ -105,6 +124,8 @@ export default function LoginPage() {
       const mockUser = {
         id: isSuperAdminLogin
           ? 'usr-superadmin-1'
+          : isSecurityLogin
+          ? 'usr-sec-1'
           : isAdminLogin
           ? 'usr-admin-1'
           : isSalesLogin
@@ -112,6 +133,8 @@ export default function LoginPage() {
           : 'usr-1',
         name: isSuperAdminLogin
           ? 'Sohail Shabbir'
+          : isSecurityLogin
+          ? 'Tariq Mehmood'
           : isAdminLogin
           ? 'Store Administrator'
           : isSalesLogin
@@ -121,6 +144,8 @@ export default function LoginPage() {
         role: assignedRole,
         title: isSuperAdminLogin
           ? 'Super Administrator'
+          : isSecurityLogin
+          ? 'Chief Security Officer'
           : isAdminLogin
           ? 'Store Administrator'
           : isSalesLogin
@@ -138,6 +163,8 @@ export default function LoginPage() {
 
       if (isSuperAdminLogin || isAdminLogin) {
         navigate('/admin');
+      } else if (isSecurityLogin) {
+        navigate('/security');
       } else if (isSalesLogin) {
         navigate('/sales');
       } else {
@@ -247,28 +274,37 @@ export default function LoginPage() {
                 Instant Access
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => handleDemoLogin('admin')}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
+                className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
                 style={{ backgroundColor: '#012D1D' }}
               >
                 <ShieldCheck className="h-4 w-4" style={{ color: '#FFAB69' }} />
-                <span>Super Admin (Sohail)</span>
+                <span>Super Admin</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleDemoLogin('sales')}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
+                className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
                 style={{ backgroundColor: '#8E4E14' }}
               >
                 <Truck className="h-4 w-4" style={{ color: '#FFAB69' }} />
-                <span>Salesman (Ali Raza)</span>
+                <span>Salesman</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('security')}
+                className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[44px]"
+                style={{ backgroundColor: '#1e293b' }}
+              >
+                <Camera className="h-4 w-4 text-emerald-400" />
+                <span>Security Officer</span>
               </button>
             </div>
             <p className="text-[11px] text-gray-500 text-center">
-              Super Admin: <span className="font-mono font-bold text-[#012D1D]">sohail@glome.com</span> • Sales: <span className="font-mono font-bold text-[#012D1D]">sales@glome.com</span>
+              Super Admin: <span className="font-mono font-bold text-[#012D1D]">sohail@glome.com</span> • Security: <span className="font-mono font-bold text-[#012D1D]">security@glome.com</span>
             </p>
           </div>
 

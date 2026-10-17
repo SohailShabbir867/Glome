@@ -13,6 +13,7 @@ import {
   Sparkles,
   X,
   ShieldAlert,
+  Camera,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import EcommercePerformanceChart from '@/components/dashboard/EcommercePerformanceChart';
@@ -36,6 +37,7 @@ import AdminReportsTab from '../components/AdminReportsTab';
 import AdminPaymentsTab from '../components/AdminPaymentsTab';
 import AdminDiscountsTab from '../components/AdminDiscountsTab';
 import AdminSettingsTab from '../components/AdminSettingsTab';
+import SecurityDashboardPage from '@/features/security/pages/SecurityDashboardPage';
 
 
 // Mock Data for Overview
@@ -167,6 +169,7 @@ export default function AdminDashboardPage() {
   }
 
   // Render Sub-Pages when tab query param is present
+  if (activeTab === 'security') return <SecurityDashboardPage />;
   if (activeTab === 'orders') return <AdminOrdersTab />;
   if (activeTab === 'products') return <AdminProductsTab />;
   if (activeTab === 'inventory') return <AdminInventoryTab />;
@@ -217,7 +220,19 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link
+              to="/admin?tab=security"
+              className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 min-h-[44px] text-xs font-bold border transition-all hover:bg-white/10 cursor-pointer"
+              style={{
+                backgroundColor: 'rgba(255, 171, 105, 0.15)',
+                color: '#ffffff',
+                borderColor: 'rgba(255, 171, 105, 0.35)',
+              }}
+            >
+              <Camera className="h-3.5 w-3.5" style={{ color: ACC }} />
+              <span>CCTV Surveillance</span>
+            </Link>
             <Link
               to="/admin?tab=products"
               className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 min-h-[44px] text-xs font-bold shadow-md transition-all hover:opacity-90 active:scale-98 cursor-pointer"

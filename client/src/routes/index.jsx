@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import StoreLayout from '@/layouts/StoreLayout';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import RoleRoute from '@/routes/RoleRoute';
-import { ADMIN_ROLES, SALES_ROLES } from '@/constants/roles';
+import { ADMIN_ROLES, SALES_ROLES, SECURITY_ROLES } from '@/constants/roles';
 
 import LandingPage from '@/features/landing/pages/LandingPage';
 import ShopPage from '@/features/shop/pages/ShopPage';
@@ -17,6 +17,7 @@ import ContactPage from '@/pages/ContactPage';
 import CheckoutPage from '@/features/checkout/pages/CheckoutPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import SalesDashboardPage from '@/features/sales/pages/SalesDashboardPage';
+import SecurityDashboardPage from '@/features/security/pages/SecurityDashboardPage';
 import NotFoundPage from '@/components/common/NotFoundPage';
 
 export const router = createBrowserRouter([
@@ -64,6 +65,18 @@ export const router = createBrowserRouter([
         path: '/admin',
         element: <DashboardLayout title="Admin" />,
         children: [{ index: true, element: <AdminDashboardPage /> }],
+      },
+    ],
+  },
+
+  // Security Surveillance dashboard: security, admin, super admin
+  {
+    element: <RoleRoute allowedRoles={SECURITY_ROLES} />,
+    children: [
+      {
+        path: '/security',
+        element: <DashboardLayout title="Security" />,
+        children: [{ index: true, element: <SecurityDashboardPage /> }],
       },
     ],
   },

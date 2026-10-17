@@ -4,6 +4,7 @@ export const ROLES = Object.freeze({
   SALES: 'sales',
   SALES_MANAGER: 'sales_manager',
   INVENTORY_MANAGER: 'inventory_manager',
+  SECURITY: 'security',
   ADMIN: 'admin',
   SUPER_ADMIN: 'super_admin',
 });
@@ -15,6 +16,7 @@ export const STAFF_ROLES = [
   ROLES.SALES,
   ROLES.SALES_MANAGER,
   ROLES.INVENTORY_MANAGER,
+  ROLES.SECURITY,
   ROLES.ADMIN,
   ROLES.SUPER_ADMIN,
 ];

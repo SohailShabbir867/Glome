@@ -4,6 +4,7 @@ export const ROLES = Object.freeze({
   SALES: 'sales',
   SALES_MANAGER: 'sales_manager',
   INVENTORY_MANAGER: 'inventory_manager',
+  SECURITY: 'security',
   ADMIN: 'admin',
   SUPER_ADMIN: 'super_admin',
 });
@@ -13,6 +14,7 @@ export const ROLE_LABELS = Object.freeze({
   [ROLES.SALES]: 'Sales Representative',
   [ROLES.SALES_MANAGER]: 'Sales Manager',
   [ROLES.INVENTORY_MANAGER]: 'Inventory Controller',
+  [ROLES.SECURITY]: 'Chief Security Officer',
   [ROLES.ADMIN]: 'Store Administrator',
   [ROLES.SUPER_ADMIN]: 'Super Administrator',
 });
@@ -22,6 +24,7 @@ export const ROLE_DESCRIPTIONS = Object.freeze({
   [ROLES.ADMIN]: 'Store administrator responsible for products, warehouse stock, orders, reports, discounts, and customer support.',
   [ROLES.SALES_MANAGER]: 'Leads sales team, manages customer orders, packing fulfillment, courier deliveries, and returns.',
   [ROLES.INVENTORY_MANAGER]: 'Controls warehouse inventory, restock alerts, suppliers, catalog items, and fulfillment packing.',
+  [ROLES.SECURITY]: 'Monitors multi-zone live CCTV camera systems, configures IP streams, investigates security alerts, and inspects video recordings.',
   [ROLES.SALES]: 'Customer-facing sales representative handling daily order verification, dispatching, and customer exchange requests.',
   [ROLES.CUSTOMER]: 'Registered customer with shopping cart, orders history, and wishlist privileges.',
 });
@@ -42,9 +45,18 @@ export const SALES_ROLES = [
   ROLES.INVENTORY_MANAGER,
 ];
 
+// Roles allowed to access the security surveillance portal
+export const SECURITY_ROLES = [
+  ROLES.SUPER_ADMIN,
+  ROLES.ADMIN,
+  ROLES.SECURITY,
+];
+
+
 // All modular dashboard tabs and access keys
 export const DASHBOARD_MODULES = [
   { id: 'dashboard', label: 'Overview Dashboard', category: 'General' },
+  { id: 'security', label: 'CCTV Surveillance & IP Cameras', category: 'Security & Facilities' },
   { id: 'orders', label: 'Order Processing Queue', category: 'Sales & Fulfillment' },
   { id: 'packing', label: 'Packing & Fulfillment', category: 'Sales & Fulfillment' },
   { id: 'deliveries', label: 'Courier Deliveries', category: 'Sales & Fulfillment' },
@@ -64,6 +76,7 @@ export const DASHBOARD_MODULES = [
 export const DEFAULT_ROLE_PERMISSIONS = Object.freeze({
   [ROLES.SUPER_ADMIN]: [
     'dashboard',
+    'security',
     'orders',
     'packing',
     'deliveries',
@@ -81,6 +94,7 @@ export const DEFAULT_ROLE_PERMISSIONS = Object.freeze({
   ],
   [ROLES.ADMIN]: [
     'dashboard',
+    'security',
     'orders',
     'packing',
     'deliveries',
@@ -93,6 +107,12 @@ export const DEFAULT_ROLE_PERMISSIONS = Object.freeze({
     'reports',
     'payments',
     'discounts',
+    'settings',
+  ],
+  [ROLES.SECURITY]: [
+    'dashboard',
+    'security',
+    'messages',
     'settings',
   ],
   [ROLES.SALES_MANAGER]: [
@@ -152,6 +172,7 @@ export const HOME_BY_ROLE = Object.freeze({
   [ROLES.CUSTOMER]: '/',
   [ROLES.SALES]: '/sales',
   [ROLES.SALES_MANAGER]: '/sales',
+  [ROLES.SECURITY]: '/security',
   [ROLES.INVENTORY_MANAGER]: '/admin?tab=inventory',
   [ROLES.ADMIN]: '/admin',
   [ROLES.SUPER_ADMIN]: '/admin',

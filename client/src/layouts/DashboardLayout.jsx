@@ -24,6 +24,9 @@ import {
   RotateCcw,
   Sparkles,
   ArrowRightLeft,
+  Camera,
+  Film,
+  Server,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -65,10 +68,12 @@ export default function DashboardLayout({ title: _title }) {
     user?.role === ROLES.SUPER_ADMIN ||
     user?.role === ROLES.INVENTORY_MANAGER;
   const isAdminPortal = location.pathname.startsWith('/admin');
+  const isSecurityPortal = location.pathname.startsWith('/security');
 
   // Admin Navigation Menu with Granular Permission Keys
   const adminNav = [
     { label: 'Dashboard', path: '/admin', icon: LayoutDashboard, permissionKey: 'dashboard' },
+    { label: 'CCTV Surveillance', path: '/admin?tab=security', icon: Camera, permissionKey: 'security' },
     { label: 'Orders', path: '/admin?tab=orders', icon: ShoppingBag, badge: '12', permissionKey: 'orders' },
     { label: 'Products', path: '/admin?tab=products', icon: Package, permissionKey: 'products' },
     { label: 'Inventory', path: '/admin?tab=inventory', icon: Layers, permissionKey: 'inventory' },
@@ -96,8 +101,19 @@ export default function DashboardLayout({ title: _title }) {
     { label: 'Settings', path: '/sales?tab=settings', icon: Settings, permissionKey: 'settings' },
   ];
 
+  // Chief Security Officer Navigation Menu
+  const securityNav = [
+    { label: 'Surveillance Wall', path: '/security', icon: Camera, permissionKey: 'security' },
+    { label: 'NVR Playback', path: '/security?tab=playback', icon: Film, permissionKey: 'security' },
+    { label: 'IP Cameras', path: '/security?tab=cameras', icon: Server, permissionKey: 'security' },
+    { label: 'Security Alerts', path: '/security?tab=alerts', icon: Bell, badge: '5', permissionKey: 'security' },
+    { label: 'Incident Reports', path: '/admin?tab=reports', icon: FileText, permissionKey: 'reports' },
+    { label: 'Settings', path: '/security?tab=settings', icon: Settings, permissionKey: 'settings' },
+  ];
+
   // Dynamically filter nav items according to the active user's permissions
   const filteredAdminNav = adminNav.filter((item) => hasPermission(user, item.permissionKey));
+  const filteredSecurityNav = securityNav.filter((item) => hasPermission(user, item.permissionKey));
 
   // If a salesman has been granted extra administrative permissions by Super Admin, dynamically append them!
   const extraSalesItems = [];
@@ -116,13 +132,22 @@ export default function DashboardLayout({ title: _title }) {
     ...extraSalesItems,
   ];
 
-  const currentNav = isAdminPortal ? filteredAdminNav : filteredSalesNav;
+  let currentNav = [];
+  if (isSecurityPortal) {
+    currentNav = filteredSecurityNav.length > 0 ? filteredSecurityNav : securityNav;
+  } else if (isAdminPortal) {
+    currentNav = filteredAdminNav;
+  } else {
+    currentNav = filteredSalesNav;
+  }
 
   const handleToggleRole = () => {
     if (isAdminPortal) {
       navigate('/sales');
-    } else {
+    } else if (isSecurityPortal) {
       navigate('/admin');
+    } else {
+      navigate('/security');
     }
   };
 
@@ -161,6 +186,8 @@ export default function DashboardLayout({ title: _title }) {
               <div className="text-[11px] tracking-wider uppercase font-semibold mt-1 truncate" style={{ color: ACC }}>
                 {isSuperAdmin
                   ? 'Super Administrator'
+                  : isSecurityPortal
+                  ? 'Surveillance & Security'
                   : isAdmin
                   ? 'Store Administration'
                   : ROLE_LABELS[user?.role] || 'Sales Representative'}
@@ -312,7 +339,11 @@ export default function DashboardLayout({ title: _title }) {
             >
               <ArrowRightLeft className="h-4 w-4" style={{ color: BTN }} />
               <span className="hidden md:inline">
-                {isAdmin ? 'Switch to Sales Portal' : 'Switch to Admin Portal'}
+                {isSecurityPortal
+                  ? 'Switch to Admin Portal'
+                  : isAdminPortal
+                  ? 'Switch to Sales Portal'
+                  : 'Switch to Security Portal'}
               </span>
             </button>
 
@@ -467,7 +498,13 @@ export default function DashboardLayout({ title: _title }) {
                       style={{ color: DK }}
                     >
                       <ArrowRightLeft className="h-3.5 w-3.5" style={{ color: BTN }} />
-                      <span>{isAdminPortal ? 'Switch to Sales View' : 'Switch to Admin View'}</span>
+                      <span>
+                        {isSecurityPortal
+                          ? 'Switch to Admin View'
+                          : isAdminPortal
+                          ? 'Switch to Sales View'
+                          : 'Switch to Security View'}
+                      </span>
                     </button>
 
                     <Link
@@ -545,7 +582,7 @@ export default function DashboardLayout({ title: _title }) {
                   <div>
                     <div className="font-serif text-xl font-black text-white leading-none">GLOME</div>
                     <div className="text-[11px] font-semibold tracking-wider uppercase mt-0.5" style={{ color: ACC }}>
-                      {isAdmin ? 'Store Admin' : 'Sales Rep'}
+                      {isSecurityPortal ? 'Chief Security' : isAdmin ? 'Store Admin' : 'Sales Rep'}
                     </div>
                   </div>
                 </div>
