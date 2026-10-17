@@ -13,6 +13,13 @@ import {
   X,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import EcommercePerformanceChart from '@/components/dashboard/EcommercePerformanceChart';
+
+// RoomBridge Exact Design Tokens
+const DK = '#012D1D';
+const BTN = '#8E4E14';
+const ACC = '#FFAB69';
+const BORDER = '#E8E2D9';
 
 // Import Modular Admin Sub-Pages
 import AdminOrdersTab from '../components/AdminOrdersTab';
@@ -78,7 +85,6 @@ export default function AdminDashboardPage() {
   const [searchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'dashboard';
 
-  const [timeline, setTimeline] = useState('30D');
   const [orders] = useState(INITIAL_ORDERS);
   const [lowStock, setLowStock] = useState(INITIAL_LOW_STOCK);
   const [restockItem, setRestockItem] = useState(null);
@@ -132,8 +138,11 @@ export default function AdminDashboardPage() {
   // Default: Overview Dashboard
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* 1. Welcome Greeting Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0b3b2c] via-[#124e3b] to-[#07241b] text-white p-6 sm:p-8 shadow-sm">
+      {/* 1. Welcome Greeting Banner (RoomBridge Deep Obsidian Gradient) */}
+      <div
+        className="relative overflow-hidden rounded-2xl text-white p-6 sm:p-7 shadow-sm"
+        style={{ background: `linear-gradient(120deg, ${DK} 60%, #024a2e)` }}
+      >
         <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 pointer-events-none hidden md:block">
           <img
             src="/images/hero-fashion-rack.jpg"
@@ -142,15 +151,18 @@ export default function AdminDashboardPage() {
           />
         </div>
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-200 backdrop-blur-xs">
+          <div className="space-y-1">
+            <div
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold"
+              style={{ backgroundColor: `${ACC}25`, color: ACC }}
+            >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Glome Store Administration</span>
             </div>
             <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-white">
               Good Morning, Sohail Shabbir 👋
             </h1>
-            <p className="text-xs sm:text-sm text-emerald-100/80 max-w-lg">
+            <p className="text-xs sm:text-sm text-white/70 max-w-lg">
               Here is what is happening across your mall today. Sales are up{' '}
               <span className="font-bold text-white">+12.5%</span> with 12 new orders ready for dispatch.
             </p>
@@ -159,34 +171,46 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-2.5">
             <Link
               to="/admin?tab=products"
-              className="inline-flex items-center gap-1.5 rounded-full bg-white text-[#0b3b2c] px-4 py-2.5 min-h-[44px] text-xs font-bold shadow-md hover:bg-emerald-50 transition-all hover:scale-102 active:scale-98 cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 min-h-[44px] text-xs font-bold shadow-md transition-all hover:opacity-90 active:scale-98 cursor-pointer"
+              style={{ backgroundColor: BTN, color: '#ffffff' }}
             >
               <Plus className="h-4 w-4" />
               <span>Add Product</span>
             </Link>
             <Link
               to="/admin?tab=discounts"
-              className="inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white px-4 py-2.5 min-h-[44px] text-xs font-bold border border-white/20 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 min-h-[44px] text-xs font-bold border transition-all cursor-pointer"
+              style={{
+                backgroundColor: 'rgba(255, 171, 105, 0.15)',
+                color: '#ffffff',
+                borderColor: 'rgba(255, 171, 105, 0.35)',
+              }}
             >
-              <Tag className="h-3.5 w-3.5" />
+              <Tag className="h-3.5 w-3.5" style={{ color: ACC }} />
               <span>Create Discount</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 2. Top 4 Metric KPI Cards */}
+      {/* 2. Top 4 Metric KPI Cards (RoomBridge Card Token) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Sales */}
-        <div className="rounded-3xl bg-white p-5 border border-gray-200/80 shadow-2xs space-y-3">
+        <div
+          className="rounded-2xl bg-white p-5 border shadow-sm space-y-3"
+          style={{ borderColor: BORDER }}
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Sales</span>
-            <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+            <div
+              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
               <Wallet className="h-5 w-5" />
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-extrabold text-[#14211d]">
+            <div className="font-serif text-2xl sm:text-3xl font-extrabold" style={{ color: DK }}>
               $12,458
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mt-1">
@@ -200,16 +224,20 @@ export default function AdminDashboardPage() {
         {/* Total Orders */}
         <Link
           to="/admin?tab=orders"
-          className="rounded-3xl bg-white p-5 border border-gray-200/80 shadow-2xs space-y-3 hover:border-emerald-300 transition-colors cursor-pointer block"
+          className="rounded-2xl bg-white p-5 border shadow-sm space-y-3 hover:shadow-md transition-all cursor-pointer block"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Orders</span>
-            <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center">
+            <div
+              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
               <ShoppingBag className="h-5 w-5" />
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-extrabold text-[#14211d]">
+            <div className="font-serif text-2xl sm:text-3xl font-extrabold" style={{ color: DK }}>
               342
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mt-1">
@@ -223,16 +251,20 @@ export default function AdminDashboardPage() {
         {/* Total Customers */}
         <Link
           to="/admin?tab=customers"
-          className="rounded-3xl bg-white p-5 border border-gray-200/80 shadow-2xs space-y-3 hover:border-emerald-300 transition-colors cursor-pointer block"
+          className="rounded-2xl bg-white p-5 border shadow-sm space-y-3 hover:shadow-md transition-all cursor-pointer block"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Customers</span>
-            <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <div
+              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
               <Users className="h-5 w-5" />
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-extrabold text-[#14211d]">
+            <div className="font-serif text-2xl sm:text-3xl font-extrabold" style={{ color: DK }}>
               1,280
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mt-1">
@@ -246,16 +278,20 @@ export default function AdminDashboardPage() {
         {/* Active Staff */}
         <Link
           to="/admin?tab=staff"
-          className="rounded-3xl bg-white p-5 border border-gray-200/80 shadow-2xs space-y-3 hover:border-emerald-300 transition-colors cursor-pointer block"
+          className="rounded-2xl bg-white p-5 border shadow-sm space-y-3 hover:shadow-md transition-all cursor-pointer block"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Sales Representatives</span>
-            <div className="h-10 w-10 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center">
+            <div
+              className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
               <TrendingUp className="h-5 w-5" />
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-extrabold text-[#14211d]">
+            <div className="font-serif text-2xl sm:text-3xl font-extrabold" style={{ color: DK }}>
               18 Active
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mt-1">
@@ -267,93 +303,22 @@ export default function AdminDashboardPage() {
         </Link>
       </div>
 
-      {/* 3. Middle Section: Sales Performance Chart & Category Donut + Low Stock */}
+      {/* 3. Middle Section: Advanced Sales Performance Chart & Category Donut + Low Stock */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Sales Chart & Donut (8 cols) */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Main Sales Chart */}
-          <div className="rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h3 className="font-serif text-lg font-bold text-[#14211d]">Sales Performance</h3>
-                <p className="text-xs text-gray-500">Gross revenue and order trends</p>
-              </div>
-
-              {/* Timeframe pill selector */}
-              <div className="flex items-center gap-1 rounded-2xl bg-stone-100 p-1 self-start sm:self-auto">
-                {['7D', '30D', '90D', '1Y'].map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setTimeline(t)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      timeline === t
-                        ? 'bg-white text-[#0b3b2c] shadow-xs'
-                        : 'text-gray-500 hover:text-gray-900'
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Simulated Line Chart Canvas */}
-            <div className="relative h-64 w-full pt-4">
-              <svg className="h-full w-full overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0b3b2c" stopOpacity="0.25" />
-                    <stop offset="100%" stopColor="#0b3b2c" stopOpacity="0.0" />
-                  </linearGradient>
-                </defs>
-
-                {/* Grid lines */}
-                <line x1="0" y1="40" x2="600" y2="40" stroke="#f1f5f9" strokeDasharray="4 4" />
-                <line x1="0" y1="90" x2="600" y2="90" stroke="#f1f5f9" strokeDasharray="4 4" />
-                <line x1="0" y1="140" x2="600" y2="140" stroke="#f1f5f9" strokeDasharray="4 4" />
-                <line x1="0" y1="190" x2="600" y2="190" stroke="#f1f5f9" />
-
-                {/* Area Fill */}
-                <path
-                  d="M 0 170 Q 50 140, 100 150 T 200 130 T 300 140 T 400 60 T 500 120 T 600 70 L 600 200 L 0 200 Z"
-                  fill="url(#salesGrad)"
-                />
-
-                {/* Line Path */}
-                <path
-                  d="M 0 170 Q 50 140, 100 150 T 200 130 T 300 140 T 400 60 T 500 120 T 600 70"
-                  fill="none"
-                  stroke="#0b3b2c"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-
-                {/* Peak dot at Oct 18 ($3,248) */}
-                <circle cx="400" cy="60" r="6" fill="#0b3b2c" stroke="#ffffff" strokeWidth="3" />
-              </svg>
-
-              {/* Peak Tooltip Pill */}
-              <div className="absolute top-4 left-[60%] -translate-x-1/2 rounded-xl bg-white border border-gray-200 shadow-md px-3 py-1.5 text-center pointer-events-none">
-                <span className="text-xs text-gray-500 block">Oct 18, 2026</span>
-                <span className="font-bold text-xs text-[#0b3b2c]">$3,248</span>
-              </div>
-
-              {/* Bottom Date labels */}
-              <div className="flex justify-between text-xs text-gray-400 pt-2 font-medium">
-                <span>Oct 1</span>
-                <span>Oct 5</span>
-                <span>Oct 10</span>
-                <span>Oct 15</span>
-                <span>Oct 20</span>
-                <span>Oct 25</span>
-                <span>Oct 31</span>
-              </div>
-            </div>
-          </div>
+          {/* Interactive E-Commerce Sales Performance Chart (RoomBridge Architecture) */}
+          <EcommercePerformanceChart
+            title="Sales & Revenue Analytics"
+            subtitle="Interactive transaction volume, conversion metrics, and period breakdown"
+            accentColor={ACC}
+          />
 
           {/* Sales by Category (Donut + Legend) */}
-          <div className="rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs">
+          <div
+            className="rounded-2xl bg-white p-5 sm:p-6 border shadow-sm"
+            style={{ borderColor: BORDER }}
+          >
             <h3 className="font-serif text-lg font-bold text-[#14211d] mb-4">Sales by Category</h3>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
               {/* Donut Chart */}
@@ -366,7 +331,7 @@ export default function AdminDashboardPage() {
                       cy="18"
                       r="14"
                       fill="transparent"
-                      stroke="#0b3b2c"
+                      stroke="#012D1D"
                       strokeWidth="4.5"
                       strokeDasharray="42 100"
                       strokeDashoffset="0"
@@ -412,7 +377,7 @@ export default function AdminDashboardPage() {
               {/* Legend List */}
               <div className="md:col-span-7 grid grid-cols-2 gap-3 text-xs">
                 <div className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50">
-                  <span className="h-3 w-3 rounded-full bg-[#0b3b2c]" />
+                  <span className="h-3 w-3 rounded-full bg-[#012D1D]" />
                   <span className="text-gray-600">Shoes:</span>
                   <span className="font-bold text-[#14211d] ml-auto">42%</span>
                 </div>
@@ -447,7 +412,7 @@ export default function AdminDashboardPage() {
               </div>
               <Link
                 to="/admin?tab=inventory"
-                className="text-xs font-bold text-[#0b3b2c] hover:underline"
+                className="text-xs font-bold text-[#012D1D] hover:underline"
               >
                 View Inventory
               </Link>
@@ -466,7 +431,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setRestockItem(prod)}
-                    className="rounded-xl bg-[#0b3b2c] hover:bg-[#124e3b] text-white px-3 py-1.5 min-h-[44px] text-xs font-bold transition-colors cursor-pointer shrink-0 shadow-2xs"
+                    className="rounded-xl bg-[#012D1D] hover:bg-[#124e3b] text-white px-3 py-1.5 min-h-[44px] text-xs font-bold transition-colors cursor-pointer shrink-0 shadow-2xs"
                   >
                     Restock
                   </button>
@@ -505,7 +470,7 @@ export default function AdminDashboardPage() {
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="p-3 rounded-2xl bg-stone-50">
                 <span className="text-xs text-gray-400 font-bold uppercase block">Received</span>
-                <span className="text-xs font-bold text-[#0b3b2c] block mt-0.5">$12,458</span>
+                <span className="text-xs font-bold text-[#012D1D] block mt-0.5">$12,458</span>
                 <span className="text-xs text-emerald-600 font-semibold">+12.5%</span>
               </div>
               <div className="p-3 rounded-2xl bg-stone-50">
@@ -521,7 +486,7 @@ export default function AdminDashboardPage() {
             </div>
             <Link
               to="/admin?tab=payments"
-              className="w-full flex items-center justify-center rounded-2xl bg-[#0b3b2c] hover:bg-[#124e3b] text-white py-2.5 min-h-[44px] text-xs font-bold transition-colors cursor-pointer"
+              className="w-full flex items-center justify-center rounded-2xl bg-[#012D1D] hover:bg-[#124e3b] text-white py-2.5 min-h-[44px] text-xs font-bold transition-colors cursor-pointer"
             >
               View Full Transactions
             </Link>
@@ -535,7 +500,7 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-6 rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-serif text-base font-bold text-[#14211d]">Recent Orders</h3>
-            <Link to="/admin?tab=orders" className="text-xs font-bold text-[#0b3b2c] hover:underline">
+            <Link to="/admin?tab=orders" className="text-xs font-bold text-[#012D1D] hover:underline">
               View All (342)
             </Link>
           </div>
@@ -554,7 +519,7 @@ export default function AdminDashboardPage() {
               <tbody className="divide-y divide-gray-50">
                 {orders.map((ord) => (
                   <tr key={ord.id} className="hover:bg-gray-50/60 transition-colors">
-                    <td className="py-3 font-mono font-bold text-[#0b3b2c]">{ord.id}</td>
+                    <td className="py-3 font-mono font-bold text-[#012D1D]">{ord.id}</td>
                     <td className="py-3 font-semibold text-gray-900">{ord.customer}</td>
                     <td className="py-3 font-bold text-gray-900">${ord.amount.toFixed(2)}</td>
                     <td className="py-3">
@@ -574,7 +539,7 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-6 rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-serif text-base font-bold text-[#14211d]">Salesmen Performance</h3>
-            <Link to="/admin?tab=staff" className="text-xs font-bold text-[#0b3b2c] hover:underline">
+            <Link to="/admin?tab=staff" className="text-xs font-bold text-[#012D1D] hover:underline">
               Manage Staff
             </Link>
           </div>
@@ -599,7 +564,7 @@ export default function AdminDashboardPage() {
                       <span>{staff.name}</span>
                     </td>
                     <td className="py-3 font-semibold text-gray-700">{staff.orders}</td>
-                    <td className="py-3 font-bold text-[#0b3b2c]">${staff.sales.toLocaleString()}</td>
+                    <td className="py-3 font-bold text-[#012D1D]">${staff.sales.toLocaleString()}</td>
                     <td className="py-3 font-semibold text-emerald-700">{staff.conv}</td>
                   </tr>
                 ))}
@@ -615,7 +580,7 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-6 rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-serif text-base font-bold text-[#14211d]">Customer Contacts & Messages</h3>
-            <Link to="/admin?tab=messages" className="text-xs font-bold text-[#0b3b2c] hover:underline">
+            <Link to="/admin?tab=messages" className="text-xs font-bold text-[#012D1D] hover:underline">
               Inbox (24)
             </Link>
           </div>
@@ -705,7 +670,7 @@ export default function AdminDashboardPage() {
                       onClick={() => setRestockAmount(amt)}
                       className={`flex-1 py-2 min-h-[44px] rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                         restockAmount === amt
-                          ? 'border-[#0b3b2c] bg-[#0b3b2c] text-white'
+                          ? 'border-[#012D1D] bg-[#012D1D] text-white'
                           : 'border-gray-200 hover:bg-gray-50 text-gray-700'
                       }`}
                     >
@@ -726,7 +691,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="button"
                   onClick={handleRestock}
-                  className="flex-1 rounded-full bg-[#0b3b2c] py-2.5 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] shadow-sm cursor-pointer"
+                  className="flex-1 rounded-full bg-[#012D1D] py-2.5 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] shadow-sm cursor-pointer"
                 >
                   Confirm Restock
                 </button>
@@ -776,7 +741,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setQuickActionModal(null)}
-                  className="w-full rounded-full bg-[#0b3b2c] py-2.5 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] shadow-sm cursor-pointer"
+                  className="w-full rounded-full bg-[#012D1D] py-2.5 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] shadow-sm cursor-pointer"
                 >
                   Close Window
                 </button>

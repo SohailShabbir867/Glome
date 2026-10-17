@@ -18,7 +18,6 @@ import {
   Bell,
   Menu,
   X,
-  ExternalLink,
   ChevronDown,
   Box,
   Truck,
@@ -36,9 +35,17 @@ export default function DashboardLayout({ title: _title }) {
   const user = useSelector(selectCurrentUser);
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // RoomBridge Exact Design Tokens
+  const DK = '#012D1D'; // Obsidian Dark Green
+  const BTN = '#8E4E14'; // Cognac Leather / Warm Brown
+  const ACC = '#FFAB69'; // Peach Gold Accent
+  const CR = '#F7F4EF'; // Cream Background
+  const BORDER = '#E8E2D9'; // Stone Warm Border
 
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
 
@@ -85,20 +92,37 @@ export default function DashboardLayout({ title: _title }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f3f4f7] text-[#14211d] flex font-sans">
-      {/* 1. Desktop Dark Luxury Sidebar */}
-      <aside className="hidden lg:flex w-64 xl:w-72 flex-col justify-between bg-[#07241b] text-white border-r border-[#0d3b2e] shrink-0 sticky top-0 h-screen select-none">
+    <div className="min-h-screen text-[#012D1D] flex font-sans" style={{ backgroundColor: CR }}>
+      {/* 1. Desktop Placeholder to reserve 80px space when sidebar is collapsed */}
+      <div className="hidden lg:block w-20 shrink-0" />
+
+      {/* 2. Desktop Hover-Expanding Dark Luxury Sidebar (RoomBridge #012D1D) */}
+      <aside
+        onMouseEnter={() => setIsSidebarHovered(true)}
+        onMouseLeave={() => setIsSidebarHovered(false)}
+        className={`hidden lg:flex fixed top-0 bottom-0 left-0 z-40 flex-col justify-between text-white border-r transition-all duration-300 ease-in-out select-none shadow-2xl ${
+          isSidebarHovered ? 'w-68' : 'w-20'
+        }`}
+        style={{ backgroundColor: DK, borderColor: 'rgba(255,255,255,0.08)' }}
+      >
         {/* Top: Brand Header */}
-        <div className="p-6 border-b border-white/10">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#07241b] shadow-md group-hover:scale-105 transition-transform">
+        <div className="p-4 border-b border-white/10 flex items-center min-h-[72px]">
+          <Link to="/" className="flex items-center group w-full">
+            <div
+              className="flex h-11 w-11 items-center justify-center rounded-xl shrink-0 shadow-md group-hover:scale-105 transition-transform"
+              style={{ backgroundColor: ACC, color: DK }}
+            >
               <Sparkles className="h-5 w-5" />
             </div>
-            <div>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                isSidebarHovered ? 'opacity-100 max-w-[190px] ml-3' : 'opacity-0 max-w-0 pointer-events-none'
+              }`}
+            >
               <div className="font-serif text-2xl font-black tracking-tight text-white leading-none">
                 GLOME
               </div>
-              <div className="text-xs tracking-widest uppercase text-emerald-200/80 font-semibold mt-1">
+              <div className="text-[11px] tracking-wider uppercase font-semibold mt-1 truncate" style={{ color: ACC }}>
                 {isAdmin ? 'Store Administration' : 'Sales Representative'}
               </div>
             </div>
@@ -106,10 +130,12 @@ export default function DashboardLayout({ title: _title }) {
         </div>
 
         {/* Center: Scrollable Navigation Menu */}
-        <div className="flex-1 overflow-y-auto px-4 py-5 space-y-1.5 scrollbar-thin scrollbar-thumb-white/10">
-          <div className="px-3 pb-2 text-xs font-bold uppercase tracking-wider text-emerald-300/70">
-            Navigation Menu
-          </div>
+        <div className="flex-1 overflow-y-auto px-2.5 py-4 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
+          {isSidebarHovered && (
+            <div className="px-3 pb-2 text-[11px] font-black uppercase tracking-wider transition-opacity" style={{ color: `${ACC}cc` }}>
+              Navigation Menu
+            </div>
+          )}
           {currentNav.map((item) => {
             const [itemPath, itemQuery] = item.path.split('?');
             const isActive = itemQuery
@@ -121,61 +147,82 @@ export default function DashboardLayout({ title: _title }) {
               <Link
                 key={item.label}
                 to={item.path}
-                className={`flex items-center justify-between px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all ${
+                title={!isSidebarHovered ? item.label : undefined}
+                className={`relative flex items-center min-h-[46px] rounded-xl text-xs font-semibold transition-all duration-150 ${
+                  isSidebarHovered ? 'px-3.5 justify-between' : 'px-0 justify-center'
+                } ${
                   isActive
-                    ? 'bg-[#124e3b] text-white shadow-xs'
-                    : 'text-emerald-100/75 hover:bg-white/5 hover:text-white'
+                    ? 'shadow-xs font-bold'
+                    : 'text-white/70 hover:text-white hover:bg-white/8'
                 }`}
+                style={
+                  isActive
+                    ? { backgroundColor: `${ACC}22`, color: ACC }
+                    : {}
+                }
               >
-                <div className="flex items-center gap-3">
-                  <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-emerald-300' : 'text-emerald-400/80'}`} />
-                  <span>{item.label}</span>
+                <div className={`flex items-center ${isSidebarHovered ? 'gap-3 min-w-0' : 'justify-center'}`}>
+                  <Icon
+                    className="h-5 w-5 shrink-0 transition-transform"
+                    style={{ color: isActive ? ACC : 'rgba(255,255,255,0.7)' }}
+                  />
+                  {isSidebarHovered && (
+                    <span className="truncate whitespace-nowrap">{item.label}</span>
+                  )}
                 </div>
-                {item.badge && (
+                {isSidebarHovered && item.badge && (
                   <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      isActive ? 'bg-white text-[#0b3b2c]' : 'bg-rose-500 text-white'
-                    }`}
+                    className="px-2 py-0.5 rounded-full text-xs font-bold shrink-0 shadow-2xs"
+                    style={
+                      isActive
+                        ? { backgroundColor: ACC, color: DK }
+                        : { backgroundColor: '#ef4444', color: '#ffffff' }
+                    }
                   >
                     {item.badge}
                   </span>
+                )}
+                {!isSidebarHovered && item.badge && (
+                  <span
+                    className="absolute top-2 right-2.5 w-2 h-2 rounded-full"
+                    style={{ backgroundColor: isActive ? ACC : '#ef4444' }}
+                  />
                 )}
               </Link>
             );
           })}
         </div>
 
-        {/* Bottom: Context Box & View Storefront */}
-        <div className="p-4 border-t border-white/10 space-y-3">
-          <div className="rounded-2xl bg-gradient-to-br from-[#0c3c2e] to-[#124e3b] p-3.5 border border-white/10 shadow-xs">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-                <ShoppingBag className="h-4 w-4 text-emerald-300" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-bold text-white truncate">
-                  {isAdmin ? 'Glome Online Mall' : `${user?.name || 'Ali Raza'} (Sales)`}
-                </h4>
-                <p className="text-xs text-emerald-200/80 truncate">
-                  {isAdmin ? 'Fashion • Style • You' : 'Active & Taking Orders'}
+        {/* Bottom User Info (View Sales button removed completely as requested) */}
+        <div className="p-3 border-t border-white/10">
+          <div className={`flex items-center ${isSidebarHovered ? 'gap-3 px-2 py-1.5' : 'justify-center py-2'}`}>
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden shrink-0 font-bold text-xs shadow-xs"
+              style={{ backgroundColor: `${ACC}25`, color: ACC }}
+            >
+              {user?.name ? user.name[0].toUpperCase() : (isAdmin ? 'A' : 'S')}
+            </div>
+            {isSidebarHovered && (
+              <div className="min-w-0 flex-1">
+                <p className="text-white text-xs font-semibold truncate leading-tight">
+                  {user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}
+                </p>
+                <p className="text-[11px] truncate mt-0.5" style={{ color: `${ACC}cc` }}>
+                  {isAdmin ? 'Administrator' : 'Sales Representative'}
                 </p>
               </div>
-            </div>
-            <Link
-              to="/"
-              className="mt-3 flex items-center justify-center gap-1.5 w-full rounded-xl bg-white/15 hover:bg-white/25 py-2 min-h-[44px] text-xs font-bold text-white transition-colors"
-            >
-              <span>View Live Storefront</span>
-              <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
+            )}
           </div>
         </div>
       </aside>
 
-      {/* 2. Main Content Area */}
+      {/* 3. Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top Navbar */}
-        <header className="sticky top-0 z-20 bg-white border-b border-gray-200/90 px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4 shadow-2xs">
+        <header
+          className="sticky top-0 z-20 bg-white border-b px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4 shadow-2xs"
+          style={{ borderColor: BORDER }}
+        >
           {/* Mobile hamburger */}
           <button
             type="button"
@@ -193,10 +240,18 @@ export default function DashboardLayout({ title: _title }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search orders, customers, products, or anything... (Ctrl + K)"
-              className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2 pl-9 pr-14 text-xs text-[#14211d] placeholder-gray-400 focus:border-[#0b3b2c] focus:bg-white focus:outline-none transition-all"
+              className="w-full rounded-xl border py-2 pl-9 pr-14 text-xs placeholder-gray-400 focus:bg-white focus:outline-none transition-all"
+              style={{
+                backgroundColor: `${CR}`,
+                borderColor: BORDER,
+                color: DK,
+              }}
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono bg-gray-200/80 px-1.5 py-0.5 rounded text-gray-600">
+            <span
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono px-1.5 py-0.5 rounded border text-gray-600"
+              style={{ backgroundColor: '#ffffff', borderColor: BORDER }}
+            >
               ⌘K
             </span>
           </div>
@@ -208,17 +263,29 @@ export default function DashboardLayout({ title: _title }) {
               type="button"
               onClick={handleToggleRole}
               title="Click to toggle between Admin & Salesman views"
-              className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 hover:bg-gray-100 px-3.5 py-2 min-h-[44px] text-xs font-bold text-[#14211d] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl border px-3.5 py-2 min-h-[44px] text-xs font-bold transition-all cursor-pointer shadow-2xs hover:shadow-xs"
+              style={{
+                backgroundColor: '#ffffff',
+                borderColor: BORDER,
+                color: DK,
+              }}
             >
-              <ArrowRightLeft className="h-4 w-4 text-[#0b3b2c]" />
+              <ArrowRightLeft className="h-4 w-4" style={{ color: BTN }} />
               <span className="hidden md:inline">
                 {isAdmin ? 'Switch to Sales Portal' : 'Switch to Admin Portal'}
               </span>
             </button>
 
             {/* Date Indicator Badge */}
-            <div className="hidden xl:flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2 text-xs font-semibold text-gray-700">
-              <Calendar className="h-4 w-4 text-[#0b3b2c]" />
+            <div
+              className="hidden xl:flex items-center gap-2 rounded-xl border px-3.5 py-2 text-xs font-semibold"
+              style={{
+                backgroundColor: '#ffffff',
+                borderColor: BORDER,
+                color: DK,
+              }}
+            >
+              <Calendar className="h-4 w-4" style={{ color: BTN }} />
               <span>{isAdmin ? 'Oct 1, 2026 - Oct 31, 2026' : 'Oct 27, 2026 (Today)'}</span>
             </div>
 
@@ -228,9 +295,10 @@ export default function DashboardLayout({ title: _title }) {
                 type="button"
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
                 aria-label="Notifications"
-                className="relative p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                className="relative p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer border"
+                style={{ borderColor: BORDER, backgroundColor: '#ffffff' }}
               >
-                <Bell className="h-5 w-5" />
+                <Bell className="h-5 w-5" style={{ color: DK }} />
                 <span className="absolute top-1.5 right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-xs font-bold text-white shadow-2xs">
                   {isAdmin ? '3' : '5'}
                 </span>
@@ -242,26 +310,27 @@ export default function DashboardLayout({ title: _title }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-xl border border-gray-100 py-3 z-50 text-xs"
+                    className="absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-xl border py-3 z-50 text-xs"
+                    style={{ borderColor: BORDER }}
                   >
-                    <div className="px-4 pb-2 border-b border-gray-100 flex items-center justify-between">
-                      <span className="font-bold text-gray-900 text-xs">Notifications</span>
-                      <span className="text-xs text-emerald-700 font-semibold cursor-pointer">
+                    <div className="px-4 pb-2 border-b flex items-center justify-between" style={{ borderColor: BORDER }}>
+                      <span className="font-bold text-xs" style={{ color: DK }}>Notifications</span>
+                      <span className="text-xs font-semibold cursor-pointer" style={{ color: BTN }}>
                         Mark all read
                       </span>
                     </div>
-                    <div className="divide-y divide-gray-50 max-h-64 overflow-y-auto">
-                      <div className="p-3 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <div className="font-bold text-[#14211d] text-xs">New Order #ORD-1042</div>
+                    <div className="divide-y max-h-64 overflow-y-auto" style={{ borderColor: BORDER }}>
+                      <div className="p-3 hover:bg-stone-50 transition-colors cursor-pointer">
+                        <div className="font-bold text-xs" style={{ color: DK }}>New Order #ORD-1042</div>
                         <p className="text-gray-500 text-xs">Ayesha Khan placed an order for $89.99</p>
                         <span className="text-xs text-gray-400">10 mins ago</span>
                       </div>
-                      <div className="p-3 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <div className="font-bold text-rose-600 text-xs">Low Stock Alert: Classic Hoodie</div>
+                      <div className="p-3 hover:bg-stone-50 transition-colors cursor-pointer">
+                        <div className="font-bold text-rose-600 text-xs">Low Stock Alert: Classic Loafers</div>
                         <p className="text-gray-500 text-xs">Only 8 units left in warehouse</p>
                         <span className="text-xs text-gray-400">1 hour ago</span>
                       </div>
-                      <div className="p-3 hover:bg-gray-50 transition-colors cursor-pointer">
+                      <div className="p-3 hover:bg-stone-50 transition-colors cursor-pointer">
                         <div className="font-bold text-amber-600 text-xs">Product Exchange Request</div>
                         <p className="text-gray-500 text-xs">Sara Malik requested size change on #ORD-1040</p>
                         <span className="text-xs text-gray-400">2 hours ago</span>
@@ -277,14 +346,18 @@ export default function DashboardLayout({ title: _title }) {
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2.5 p-1.5 min-h-[44px] rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
+                className="flex items-center gap-2.5 p-1.5 min-h-[44px] rounded-xl hover:bg-gray-100 transition-colors cursor-pointer border"
+                style={{ borderColor: BORDER, backgroundColor: '#ffffff' }}
               >
-                <div className="h-8 w-8 rounded-full bg-[#0b3b2c] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                  {user?.name ? user.name[0] : 'U'}
+                <div
+                  className="h-8 w-8 rounded-full text-white flex items-center justify-center font-bold text-xs shadow-xs"
+                  style={{ backgroundColor: DK }}
+                >
+                  {user?.name ? user.name[0] : (isAdmin ? 'S' : 'A')}
                 </div>
                 <div className="hidden sm:flex flex-col text-left">
-                  <span className="text-xs font-bold text-[#14211d] leading-none">
-                    {user?.name || 'Sohail Shabbir'}
+                  <span className="text-xs font-bold leading-none" style={{ color: DK }}>
+                    {user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}
                   </span>
                   <span className="text-xs text-gray-500 font-medium capitalize mt-0.5">
                     {isAdmin ? 'Administrator' : 'Sales Representative'}
@@ -299,23 +372,25 @@ export default function DashboardLayout({ title: _title }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-52 rounded-2xl bg-white shadow-xl border border-gray-100 py-2 z-50 text-xs"
+                    className="absolute right-0 mt-2 w-52 rounded-2xl bg-white shadow-xl border py-2 z-50 text-xs"
+                    style={{ borderColor: BORDER }}
                   >
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <div className="font-bold text-gray-900">{user?.name}</div>
-                      <div className="text-gray-400 truncate">{user?.email}</div>
+                    <div className="px-4 py-2 border-b" style={{ borderColor: BORDER }}>
+                      <div className="font-bold" style={{ color: DK }}>{user?.name || (isAdmin ? 'Sohail Shabbir' : 'Ali Raza')}</div>
+                      <div className="text-gray-400 truncate">{user?.email || 'admin@glomemall.com'}</div>
                     </div>
                     <button
                       type="button"
                       onClick={handleToggleRole}
-                      className="w-full text-left px-4 py-2 text-emerald-800 hover:bg-emerald-50 flex items-center gap-2 font-semibold"
+                      className="w-full text-left px-4 py-2 hover:bg-stone-50 flex items-center gap-2 font-semibold"
+                      style={{ color: DK }}
                     >
-                      <ArrowRightLeft className="h-3.5 w-3.5" />
+                      <ArrowRightLeft className="h-3.5 w-3.5" style={{ color: BTN }} />
                       <span>{isAdmin ? 'Switch to Sales View' : 'Switch to Admin View'}</span>
                     </button>
                     <Link
                       to="/"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
+                      className="block px-4 py-2 text-gray-700 hover:bg-stone-50"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       Customer Storefront
@@ -333,7 +408,7 @@ export default function DashboardLayout({ title: _title }) {
         </main>
       </div>
 
-      {/* 3. Mobile Slide-out Drawer */}
+      {/* 4. Mobile Slide-out Drawer */}
       <AnimatePresence>
         {mobileSidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden flex">
@@ -346,26 +421,41 @@ export default function DashboardLayout({ title: _title }) {
               className="fixed inset-0 bg-black/60 backdrop-blur-xs"
             />
 
-            {/* Sidebar content */}
+            {/* Sidebar content (RoomBridge #012D1D) */}
             <motion.div
               initial={{ x: -280 }}
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-              className="relative w-72 bg-[#07241b] text-white flex flex-col justify-between h-full shadow-2xl z-10"
+              className="relative w-72 text-white flex flex-col justify-between h-full shadow-2xl z-10 border-r border-white/10"
+              style={{ backgroundColor: DK }}
             >
               <div className="p-5 flex items-center justify-between border-b border-white/10">
-                <div className="font-serif text-xl font-bold text-white">GLOME</div>
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-xl shadow-md"
+                    style={{ backgroundColor: ACC, color: DK }}
+                  >
+                    <Sparkles className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="font-serif text-xl font-black text-white leading-none">GLOME</div>
+                    <div className="text-[11px] font-semibold tracking-wider uppercase mt-0.5" style={{ color: ACC }}>
+                      {isAdmin ? 'Store Admin' : 'Sales Rep'}
+                    </div>
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={() => setMobileSidebarOpen(false)}
-                  className="p-1.5 text-gray-300 hover:text-white"
+                  aria-label="Close sidebar"
+                  className="p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-1.5">
+              <div className="flex-1 overflow-y-auto p-4 space-y-1">
                 {currentNav.map((item) => {
                   const [itemPath, itemQuery] = item.path.split('?');
                   const isActive = itemQuery
@@ -380,19 +470,27 @@ export default function DashboardLayout({ title: _title }) {
                       onClick={() => setMobileSidebarOpen(false)}
                       className={`flex items-center justify-between px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all ${
                         isActive
-                          ? 'bg-[#124e3b] text-white shadow-xs'
-                          : 'text-emerald-100/75 hover:bg-white/10 hover:text-white'
+                          ? 'shadow-xs font-bold'
+                          : 'text-white/70 hover:bg-white/10 hover:text-white'
                       }`}
+                      style={
+                        isActive
+                          ? { backgroundColor: `${ACC}22`, color: ACC }
+                          : {}
+                      }
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-emerald-300' : 'text-emerald-400/80'}`} />
+                        <Icon className="h-4 w-4 shrink-0" style={{ color: isActive ? ACC : 'rgba(255,255,255,0.7)' }} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
                         <span
-                          className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                            isActive ? 'bg-white text-[#0b3b2c]' : 'bg-rose-500 text-white'
-                          }`}
+                          className="px-2 py-0.5 rounded-full text-xs font-bold shadow-2xs"
+                          style={
+                            isActive
+                              ? { backgroundColor: ACC, color: DK }
+                              : { backgroundColor: '#ef4444', color: '#ffffff' }
+                          }
                         >
                           {item.badge}
                         </span>
@@ -409,10 +507,11 @@ export default function DashboardLayout({ title: _title }) {
                     handleToggleRole();
                     setMobileSidebarOpen(false);
                   }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/15 py-2.5 text-xs font-bold text-white"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl py-2.5 min-h-[44px] text-xs font-bold transition-all shadow-sm"
+                  style={{ backgroundColor: BTN, color: '#ffffff' }}
                 >
                   <ArrowRightLeft className="h-4 w-4" />
-                  <span>{isAdmin ? 'Switch to Sales' : 'Switch to Admin'}</span>
+                  <span>{isAdmin ? 'Switch to Sales Portal' : 'Switch to Admin Portal'}</span>
                 </button>
               </div>
             </motion.div>

@@ -15,6 +15,14 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import EcommercePerformanceChart from '@/components/dashboard/EcommercePerformanceChart';
+
+// RoomBridge Exact Design Tokens
+const DK = '#012D1D';
+const BTN = '#8E4E14';
+const ACC = '#FFAB69';
+const CR = '#F7F4EF';
+const BORDER = '#E8E2D9';
 
 // Import Modular Sales Sub-Pages
 import SalesOrdersTab from '../components/SalesOrdersTab';
@@ -221,18 +229,24 @@ export default function SalesDashboardPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* 1. Welcome Greeting Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0b3b2c] via-[#124e3b] to-[#07241b] text-white p-6 sm:p-8 shadow-sm">
+      {/* 1. Welcome Greeting Banner (RoomBridge Deep Obsidian Gradient) */}
+      <div
+        className="relative overflow-hidden rounded-2xl text-white p-6 sm:p-7 shadow-sm"
+        style={{ background: `linear-gradient(120deg, ${DK} 60%, #024a2e)` }}
+      >
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+          <div className="space-y-1">
+            <div
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold"
+              style={{ backgroundColor: `${ACC}25`, color: ACC }}
+            >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Sales Representative Portal</span>
             </div>
             <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-white">
               Hello Ali Raza 👋
             </h1>
-            <p className="text-xs sm:text-sm text-emerald-100/80 max-w-lg">
+            <p className="text-xs sm:text-sm text-white/70 max-w-lg">
               Here is your daily order processing dispatch queue and customer exchange portal.
               You have <span className="font-bold text-white">4 pending orders</span> waiting for
               verification.
@@ -243,33 +257,36 @@ export default function SalesDashboardPage() {
             <button
               type="button"
               onClick={() => setActiveTabSection('orders')}
-              className={`px-4 py-2 min-h-[44px] rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 activeTabSection === 'orders'
-                  ? 'bg-white text-[#0b3b2c] shadow-md'
+                  ? 'shadow-md font-black'
                   : 'bg-white/15 text-white hover:bg-white/25'
               }`}
+              style={activeTabSection === 'orders' ? { backgroundColor: ACC, color: DK } : {}}
             >
               Order Processing
             </button>
             <button
               type="button"
               onClick={() => setActiveTabSection('exchanges')}
-              className={`px-4 py-2 min-h-[44px] rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 activeTabSection === 'exchanges'
-                  ? 'bg-white text-[#0b3b2c] shadow-md'
+                  ? 'shadow-md font-black'
                   : 'bg-white/15 text-white hover:bg-white/25'
               }`}
+              style={activeTabSection === 'exchanges' ? { backgroundColor: ACC, color: DK } : {}}
             >
               Exchanges ({exchanges.filter((e) => e.status === 'Pending Review').length})
             </button>
             <button
               type="button"
               onClick={() => setActiveTabSection('stock')}
-              className={`px-4 py-2 min-h-[44px] rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 activeTabSection === 'stock'
-                  ? 'bg-white text-[#0b3b2c] shadow-md'
+                  ? 'shadow-md font-black'
                   : 'bg-white/15 text-white hover:bg-white/25'
               }`}
+              style={activeTabSection === 'stock' ? { backgroundColor: ACC, color: DK } : {}}
             >
               Stock Check
             </button>
@@ -277,42 +294,64 @@ export default function SalesDashboardPage() {
         </div>
       </div>
 
-      {/* 2. Top 5 KPI Metric Cards */}
+      {/* 2. Top 5 KPI Metric Cards (RoomBridge Token) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {/* Total Orders */}
         <Link
           to="/sales?tab=orders"
-          className="rounded-3xl bg-white p-4 sm:p-5 border border-gray-200/80 shadow-2xs space-y-2 hover:border-emerald-300 transition-colors block cursor-pointer"
+          className="rounded-2xl bg-white p-4 sm:p-5 border shadow-sm space-y-2 hover:shadow-md transition-all block cursor-pointer"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between text-xs font-bold text-gray-500">
             <span>Total Orders</span>
-            <ShoppingBag className="h-4 w-4 text-emerald-700" />
+            <div
+              className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
+              <ShoppingBag className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-serif text-2xl font-extrabold text-[#14211d]">12</div>
-          <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+          <div className="font-serif text-2xl font-extrabold" style={{ color: DK }}>12</div>
+          <div className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
             <span>+33%</span>
             <span className="text-gray-400 font-normal">vs yesterday</span>
           </div>
         </Link>
 
         {/* Confirmed Orders */}
-        <div className="rounded-3xl bg-white p-4 sm:p-5 border border-gray-200/80 shadow-2xs space-y-2">
+        <div
+          className="rounded-2xl bg-white p-4 sm:p-5 border shadow-sm space-y-2"
+          style={{ borderColor: BORDER }}
+        >
           <div className="flex items-center justify-between text-xs font-bold text-gray-500">
             <span>Confirmed</span>
-            <CheckCircle2 className="h-4 w-4 text-emerald-700" />
+            <div
+              className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
+              <CheckCircle2 className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-serif text-2xl font-extrabold text-[#14211d]">8</div>
-          <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+          <div className="font-serif text-2xl font-extrabold" style={{ color: DK }}>8</div>
+          <div className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
             <span>+60%</span>
             <span className="text-gray-400 font-normal">vs yesterday</span>
           </div>
         </div>
 
         {/* Pending Orders */}
-        <div className="rounded-3xl bg-white p-4 sm:p-5 border border-gray-200/80 shadow-2xs space-y-2">
+        <div
+          className="rounded-2xl bg-white p-4 sm:p-5 border shadow-sm space-y-2"
+          style={{ borderColor: BORDER }}
+        >
           <div className="flex items-center justify-between text-xs font-bold text-gray-500">
             <span>Pending</span>
-            <Clock className="h-4 w-4 text-amber-600" />
+            <div
+              className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
+              <Clock className="h-4 w-4" />
+            </div>
           </div>
           <div className="font-serif text-2xl font-extrabold text-amber-700">4</div>
           <div className="text-xs font-semibold text-rose-600 flex items-center gap-1">
@@ -323,14 +362,20 @@ export default function SalesDashboardPage() {
         {/* Packed Orders */}
         <Link
           to="/sales?tab=packing"
-          className="rounded-3xl bg-white p-4 sm:p-5 border border-gray-200/80 shadow-2xs space-y-2 hover:border-emerald-300 transition-colors block cursor-pointer"
+          className="rounded-2xl bg-white p-4 sm:p-5 border shadow-sm space-y-2 hover:shadow-md transition-all block cursor-pointer"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between text-xs font-bold text-gray-500">
             <span>Packing Queue</span>
-            <Box className="h-4 w-4 text-blue-600" />
+            <div
+              className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
+              <Box className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-serif text-2xl font-extrabold text-[#14211d]">6</div>
-          <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+          <div className="font-serif text-2xl font-extrabold" style={{ color: DK }}>6</div>
+          <div className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
             <span>In warehouse box</span>
           </div>
         </Link>
@@ -338,27 +383,44 @@ export default function SalesDashboardPage() {
         {/* Delivered Today */}
         <Link
           to="/sales?tab=deliveries"
-          className="rounded-3xl bg-white p-4 sm:p-5 border border-gray-200/80 shadow-2xs space-y-2 col-span-2 sm:col-span-1 hover:border-emerald-300 transition-colors block cursor-pointer"
+          className="rounded-2xl bg-white p-4 sm:p-5 border shadow-sm space-y-2 col-span-2 sm:col-span-1 hover:shadow-md transition-all block cursor-pointer"
+          style={{ borderColor: BORDER }}
         >
           <div className="flex items-center justify-between text-xs font-bold text-gray-500">
             <span>Dispatched</span>
-            <Truck className="h-4 w-4 text-purple-600" />
+            <div
+              className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${ACC}25`, color: BTN }}
+            >
+              <Truck className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-serif text-2xl font-extrabold text-[#14211d]">5</div>
-          <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+          <div className="font-serif text-2xl font-extrabold" style={{ color: DK }}>5</div>
+          <div className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
             <span>With courier rider</span>
           </div>
         </Link>
       </div>
 
-      {/* 3. Section Switcher: Orders vs Exchanges vs Stock Check */}
+      {/* 3. Sales Representative Performance & Commission Velocity Chart */}
+      <EcommercePerformanceChart
+        title="Sales Representative Performance & Velocity"
+        subtitle="Daily closed orders, target progress, and 5% commission earnings"
+        accentColor={ACC}
+        gradientId="salesmanPerfGrad"
+      />
+
+      {/* 4. Section Switcher: Orders vs Exchanges vs Stock Check */}
       {activeTabSection === 'orders' && (
         <div className="space-y-6">
           {/* Main Orders Table Card */}
-          <div className="rounded-3xl bg-white p-6 border border-gray-200/80 shadow-2xs space-y-6">
+          <div
+            className="rounded-2xl bg-white p-5 sm:p-6 border shadow-sm space-y-6"
+            style={{ borderColor: BORDER }}
+          >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="font-serif text-lg font-bold text-[#14211d]">
+                <h3 className="font-serif text-lg font-bold" style={{ color: DK }}>
                   Client Order Dispatch Queue
                 </h3>
                 <p className="text-xs text-gray-500">
@@ -367,17 +429,25 @@ export default function SalesDashboardPage() {
               </div>
 
               {/* Status Filter Tabs */}
-              <div className="flex flex-wrap gap-1 bg-stone-100 p-1 rounded-2xl text-xs font-bold">
+              <div
+                className="flex flex-wrap gap-1 p-1 rounded-xl text-xs font-bold border"
+                style={{ backgroundColor: CR, borderColor: BORDER }}
+              >
                 {['All', 'Confirmed', 'Pending', 'Packing', 'Dispatched', 'Delivered'].map((st) => (
                   <button
                     key={st}
                     type="button"
                     onClick={() => setOrderFilter(st)}
-                    className={`px-3 py-1.5 min-h-[44px] rounded-xl transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 min-h-[44px] rounded-lg transition-all cursor-pointer ${
                       orderFilter === st
-                        ? 'bg-[#0b3b2c] text-white shadow-2xs'
+                        ? 'shadow-xs font-extrabold'
                         : 'text-gray-600 hover:text-gray-900'
                     }`}
+                    style={
+                      orderFilter === st
+                        ? { backgroundColor: DK, color: '#ffffff' }
+                        : {}
+                    }
                   >
                     {st}
                   </button>
@@ -402,7 +472,7 @@ export default function SalesDashboardPage() {
                 <tbody className="divide-y divide-gray-50">
                   {filteredOrders.map((ord) => (
                     <tr key={ord.id} className="hover:bg-gray-50/70 transition-colors">
-                      <td className="py-4 font-mono font-bold text-[#0b3b2c]">{ord.id}</td>
+                      <td className="py-4 font-mono font-bold text-[#012D1D]">{ord.id}</td>
                       <td className="py-4">
                         <div className="flex items-center gap-3">
                           <img
@@ -517,7 +587,7 @@ export default function SalesDashboardPage() {
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="font-mono text-xs font-bold text-[#0b3b2c] block">
+                    <span className="font-mono text-xs font-bold text-[#012D1D] block">
                       {issue.id}
                     </span>
                     <h4 className="font-bold text-sm text-[#14211d] mt-0.5">{issue.type}</h4>
@@ -557,7 +627,7 @@ export default function SalesDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleApproveExchange(issue.id)}
-                      className="rounded-xl bg-[#0b3b2c] hover:bg-[#124e3b] text-white px-3.5 py-2 min-h-[44px] text-xs font-bold shadow-xs transition-colors cursor-pointer"
+                      className="rounded-xl bg-[#012D1D] hover:bg-[#124e3b] text-white px-3.5 py-2 min-h-[44px] text-xs font-bold shadow-xs transition-colors cursor-pointer"
                     >
                       Approve & Dispatch
                     </button>
@@ -592,7 +662,7 @@ export default function SalesDashboardPage() {
                 value={stockSearch}
                 onChange={(e) => setStockSearch(e.target.value)}
                 placeholder="Filter stock by name..."
-                className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2 pl-9 pr-3 min-h-[44px] text-xs text-[#14211d] focus:border-[#0b3b2c] focus:outline-none"
+                className="w-full rounded-xl border border-gray-200 bg-[#f9fafb] py-2 pl-9 pr-3 min-h-[44px] text-xs text-[#14211d] focus:border-[#012D1D] focus:outline-none"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
             </div>
@@ -616,7 +686,7 @@ export default function SalesDashboardPage() {
                   <tr key={stock.id} className="hover:bg-gray-50/70 transition-colors">
                     <td className="py-3.5 font-bold text-gray-900">{stock.name}</td>
                     <td className="py-3.5 text-gray-500">{stock.category}</td>
-                    <td className="py-3.5 font-extrabold text-[#0b3b2c]">{stock.stock} units</td>
+                    <td className="py-3.5 font-extrabold text-[#012D1D]">{stock.stock} units</td>
                     <td className="py-3.5">
                       <span
                         className={`px-2.5 py-0.5 rounded-full border text-xs font-bold ${getBadgeStyle(
@@ -665,7 +735,7 @@ export default function SalesDashboardPage() {
             >
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">
                 <div>
-                  <span className="font-mono text-xs font-bold text-[#0b3b2c]">
+                  <span className="font-mono text-xs font-bold text-[#012D1D]">
                     Order {selectedOrder.id}
                   </span>
                   <h3 className="font-serif text-lg font-bold text-[#14211d]">
@@ -692,7 +762,7 @@ export default function SalesDashboardPage() {
                   <div>
                     <h4 className="font-bold text-sm text-[#14211d]">{selectedOrder.product}</h4>
                     <p className="text-gray-500">{selectedOrder.variant}</p>
-                    <span className="font-extrabold text-[#0b3b2c]">
+                    <span className="font-extrabold text-[#012D1D]">
                       ${selectedOrder.amount.toFixed(2)}
                     </span>
                   </div>
@@ -717,7 +787,7 @@ export default function SalesDashboardPage() {
                         onClick={() => handleUpdateOrderStatus(selectedOrder.id, st)}
                         className={`py-2 px-3 min-h-[44px] rounded-xl font-bold text-xs border transition-colors cursor-pointer ${
                           selectedOrder.status === st
-                            ? 'bg-[#0b3b2c] text-white border-[#0b3b2c]'
+                            ? 'bg-[#012D1D] text-white border-[#012D1D]'
                             : 'border-gray-200 hover:bg-gray-50 text-gray-700'
                         }`}
                       >
@@ -732,7 +802,7 @@ export default function SalesDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="w-full rounded-full bg-[#0b3b2c] py-3 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] transition-colors cursor-pointer"
+                  className="w-full rounded-full bg-[#012D1D] py-3 min-h-[44px] text-xs font-bold text-white hover:bg-[#124e3b] transition-colors cursor-pointer"
                 >
                   Done
                 </button>
